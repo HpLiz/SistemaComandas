@@ -32,16 +32,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findByEstado", query = "SELECT p FROM Pedido p WHERE p.estado = :estado")})
 public class Pedido implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ESTADO")
+    private Character estado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDPEDIDO")
     private Integer idpedido;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO")
-    private Character estado;
     @JoinColumn(name = "IDEXTRA", referencedColumnName = "IDEXTRA")
     @ManyToOne(optional = false)
     private Extra idextra;
@@ -72,13 +73,6 @@ public class Pedido implements Serializable {
         this.idpedido = idpedido;
     }
 
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
 
     public Extra getIdextra() {
         return idextra;
@@ -127,6 +121,14 @@ public class Pedido implements Serializable {
     @Override
     public String toString() {
         return "modelo.Pedido[ idpedido=" + idpedido + " ]";
+    }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     
 }

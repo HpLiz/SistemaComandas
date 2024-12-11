@@ -37,12 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Extra.findByDescripcion", query = "SELECT e FROM Extra e WHERE e.descripcion = :descripcion")})
 public class Extra implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDEXTRA")
-    private Integer idextra;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -57,6 +51,13 @@ public class Extra implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
     private String descripcion;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDEXTRA")
+    private Integer idextra;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idextra")
     private List<Pedido> pedidoList;
 
@@ -82,29 +83,6 @@ public class Extra implements Serializable {
         this.idextra = idextra;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
     @XmlTransient
     public List<Pedido> getPedidoList() {
@@ -138,6 +116,30 @@ public class Extra implements Serializable {
     @Override
     public String toString() {
         return "modelo.Extra[ idextra=" + idextra + " ]";
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
 }

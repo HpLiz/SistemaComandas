@@ -34,12 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByPuesto", query = "SELECT u FROM Usuario u WHERE u.puesto = :puesto")})
 public class Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDUSUARIO")
-    private Integer idusuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -60,6 +54,13 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PUESTO")
     private String puesto;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDUSUARIO")
+    private Integer idusuario;
 
     public Usuario() {
     }
@@ -82,6 +83,32 @@ public class Usuario implements Serializable {
 
     public void setIdusuario(Integer idusuario) {
         this.idusuario = idusuario;
+    }
+
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idusuario != null ? idusuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Usuario[ idusuario=" + idusuario + " ]";
     }
 
     public String getNombre() {
@@ -114,31 +141,6 @@ public class Usuario implements Serializable {
 
     public void setPuesto(String puesto) {
         this.puesto = puesto;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idusuario != null ? idusuario.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
-            return false;
-        }
-        Usuario other = (Usuario) object;
-        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Usuario[ idusuario=" + idusuario + " ]";
     }
     
 }

@@ -4,8 +4,12 @@
  */
 package manipuladatos;
 
+import accesodatos.ExtraFacade;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import modelo.Extra;
 
 /**
  *
@@ -15,6 +19,10 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class MDExtra {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @EJB
+    private ExtraFacade extraFacade;
+
+    public List<Extra> extras(){
+        return extraFacade.findAll();
+    }
 }

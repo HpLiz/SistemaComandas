@@ -7,6 +7,10 @@ package adm;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
+import javax.ejb.EJB;
+import manipuladatos.MDExtra;
+import modelo.Extra;
 
 /**
  *
@@ -16,10 +20,23 @@ import java.io.Serializable;
 @SessionScoped
 public class AdmExtra implements Serializable {
 
+    @EJB
+    private MDExtra mDExtra;
+
+    
+    private List<Extra> extras;
+    
     /**
      * Creates a new instance of AdmExtra
      */
     public AdmExtra() {
     }
+
+    public List<Extra> getExtras() {
+        return extras=mDExtra.extras();
+    }
+
+    
+    
     
 }

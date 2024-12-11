@@ -39,12 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Producto.findByIngredientes", query = "SELECT p FROM Producto p WHERE p.ingredientes = :ingredientes")})
 public class Producto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDPRODUCTO")
-    private Integer idproducto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -69,6 +63,13 @@ public class Producto implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "INGREDIENTES")
     private String ingredientes;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDPRODUCTO")
+    private Integer idproducto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto")
     private List<Pedido> pedidoList;
 
@@ -94,6 +95,41 @@ public class Producto implements Serializable {
 
     public void setIdproducto(Integer idproducto) {
         this.idproducto = idproducto;
+    }
+
+
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idproducto != null ? idproducto.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Producto)) {
+            return false;
+        }
+        Producto other = (Producto) object;
+        if ((this.idproducto == null && other.idproducto != null) || (this.idproducto != null && !this.idproducto.equals(other.idproducto))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Producto[ idproducto=" + idproducto + " ]";
     }
 
     public String getNombre() {
@@ -134,40 +170,6 @@ public class Producto implements Serializable {
 
     public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
-    }
-
-    @XmlTransient
-    public List<Pedido> getPedidoList() {
-        return pedidoList;
-    }
-
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idproducto != null ? idproducto.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Producto)) {
-            return false;
-        }
-        Producto other = (Producto) object;
-        if ((this.idproducto == null && other.idproducto != null) || (this.idproducto != null && !this.idproducto.equals(other.idproducto))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Producto[ idproducto=" + idproducto + " ]";
     }
     
 }

@@ -41,12 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Venta.findByTipopago", query = "SELECT v FROM Venta v WHERE v.tipopago = :tipopago")})
 public class Venta implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDVENTA")
-    private Integer idventa;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA")
@@ -65,6 +59,17 @@ public class Venta implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "TIPOPAGO")
     private String tipopago;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ESTADO")
+    private Character estado;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDVENTA")
+    private Integer idventa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa")
     private List<Pedido> pedidoList;
 
@@ -89,6 +94,41 @@ public class Venta implements Serializable {
 
     public void setIdventa(Integer idventa) {
         this.idventa = idventa;
+    }
+
+
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idventa != null ? idventa.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Venta)) {
+            return false;
+        }
+        Venta other = (Venta) object;
+        if ((this.idventa == null && other.idventa != null) || (this.idventa != null && !this.idventa.equals(other.idventa))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Venta[ idventa=" + idventa + " ]";
     }
 
     public Date getFecha() {
@@ -123,38 +163,12 @@ public class Venta implements Serializable {
         this.tipopago = tipopago;
     }
 
-    @XmlTransient
-    public List<Pedido> getPedidoList() {
-        return pedidoList;
+    public Character getEstado() {
+        return estado;
     }
 
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idventa != null ? idventa.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Venta)) {
-            return false;
-        }
-        Venta other = (Venta) object;
-        if ((this.idventa == null && other.idventa != null) || (this.idventa != null && !this.idventa.equals(other.idventa))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Venta[ idventa=" + idventa + " ]";
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     
 }

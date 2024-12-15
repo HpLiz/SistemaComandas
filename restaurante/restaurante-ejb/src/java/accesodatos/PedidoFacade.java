@@ -4,10 +4,13 @@
  */
 package accesodatos;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.Pedido;
+import modelo.Venta;
 
 /**
  *
@@ -28,4 +31,15 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
         super(Pedido.class);
     }
     
+    public List<Pedido> pedidos(Venta v) {
+        List<Pedido> pedidos=null;
+        try {
+            Query consultaup = em.createNamedQuery("Pedido.findByVenta");
+            consultaup.setParameter("idventa", v);
+            pedidos = (List<Pedido>) consultaup.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return pedidos;
+    }
 }

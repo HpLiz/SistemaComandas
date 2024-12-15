@@ -25,4 +25,11 @@ public class MDProducto {
     public List<Producto> productos(){
         return productoFacade.findAll();
     }
+<<<<<<< HEAD
+=======
+    
+    public Producto productoID(int id){
+        return productoFacade.produtoID(id);
+    }
+>>>>>>> 1308215506b6d74a9f78e65cff2862eecddc76e5
 }

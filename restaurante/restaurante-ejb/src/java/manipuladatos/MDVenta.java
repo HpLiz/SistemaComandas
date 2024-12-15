@@ -22,10 +22,25 @@ public class MDVenta {
     @EJB
     private VentaFacade ventaFacade;
     
+<<<<<<< HEAD
     public List<Venta> getEnProgreso(){
         return ventaFacade.ventas('P');
     }
 
+=======
+    public List<Venta> ventas(){
+        return ventaFacade.findAll();
+    }
+    
+    public List<Venta> ventasEstado(char e){
+        System.out.println("buscando 2...");
+        return ventaFacade.ventas(e);
+    }
+
+    public void registrarVenta(Venta v){
+        ventaFacade.create(v);
+    }
+>>>>>>> 1308215506b6d74a9f78e65cff2862eecddc76e5
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }

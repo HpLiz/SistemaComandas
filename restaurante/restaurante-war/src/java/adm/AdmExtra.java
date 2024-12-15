@@ -37,6 +37,16 @@ public class AdmExtra implements Serializable {
     }
 
     
+<<<<<<< HEAD
     
+=======
+     public Extra findExtra(int id){
+        for(Extra p:extras){
+            if(p.getIdextra()==id)
+                return p;
+        }
+        return null;
+    }
+>>>>>>> 1308215506b6d74a9f78e65cff2862eecddc76e5
     
 }

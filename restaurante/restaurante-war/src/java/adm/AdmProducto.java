@@ -24,10 +24,26 @@ public class AdmProducto implements Serializable {
     private MDProducto mDProducto;
 
     private List<Producto> productos;
+<<<<<<< HEAD
     private String[] tipos={"Comida","Bebida","Postre"};
     
     private String tipo;
     
+=======
+    private Producto producto;
+    private String[] tipos = {"Comida", "Bebida", "Postre"};
+
+    private String tipo;
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+>>>>>>> 1308215506b6d74a9f78e65cff2862eecddc76e5
     /**
      * Creates a new instance of AdmProducto
      */
@@ -35,7 +51,11 @@ public class AdmProducto implements Serializable {
     }
 
     public List<Producto> getProductos() {
+<<<<<<< HEAD
         return productos=mDProducto.productos();
+=======
+        return productos = mDProducto.productos();
+>>>>>>> 1308215506b6d74a9f78e65cff2862eecddc76e5
     }
 
     public String[] getTipos() {
@@ -50,4 +70,15 @@ public class AdmProducto implements Serializable {
         this.tipo = tipo;
     }
 
+<<<<<<< HEAD
+=======
+    
+    public Producto findProducto(int id){
+        for(Producto p:productos){
+            if(p.getIdproducto()==id)
+                return p;
+        }
+        return null;
+    }
+>>>>>>> 1308215506b6d74a9f78e65cff2862eecddc76e5
 }

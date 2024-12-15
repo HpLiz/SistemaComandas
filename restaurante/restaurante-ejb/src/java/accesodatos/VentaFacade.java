@@ -37,6 +37,7 @@ public class VentaFacade extends AbstractFacade<Venta> {
             consultaup.setParameter("estado", est);
             ventas = (List<Venta>) consultaup.getResultList();
         } catch (Exception e) {
+            System.out.println("Error sql"+e);
             return null;
         }
         return ventas;

@@ -7,6 +7,7 @@ package accesodatos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.Producto;
 
 /**
@@ -26,6 +27,19 @@ public class ProductoFacade extends AbstractFacade<Producto> {
 
     public ProductoFacade() {
         super(Producto.class);
+    }
+    
+    public Producto produtoID(int id) {
+        Producto produto=null;
+        try {
+            Query consultaup = em.createNamedQuery("Producto.findByIdproducto");
+            consultaup.setParameter("idproducto", id);
+            produto = (Producto) consultaup.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error fecade");
+            return null;
+        }
+        return produto;
     }
     
     

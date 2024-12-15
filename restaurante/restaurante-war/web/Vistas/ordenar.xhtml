@@ -11,18 +11,19 @@
     <body>
 
         <ui:composition template="./../resources/basico.xhtml">
-            <p:growl sticky="300" id="mensaje" ></p:growl>
+
 
             <ui:define name="top">
                 Ordenar
             </ui:define>
 
             <ui:define name="left">
+                <p:growl sticky="300" id="mensaje" ></p:growl>
                 <f:view>
                     <h:form id="menu">
                         <p:menu>
                             <c:forEach var="item" items="#{admVenta.mesas}" rendered="true">                                
-                                <p:menuitem value="mesa #{item}" actionListener="#{admVenta.seleccionMesa(item)}" update=":pedidos">
+                                <p:menuitem value="mesa #{item}" actionListener="#{admVenta.seleccionMesa(item)}" update=":ordenes" action="#{admPedido.actualizarVenta(admVenta.venta)}">
                                 </p:menuitem>
                             </c:forEach>
                         </p:menu>
@@ -36,67 +37,69 @@
 
             <ui:define name="content">
                 <f:view>
-                    <h:form id="pedidos">
-                        <h:form id="formular">
+                    <p:panelGrid columns="1" id="ordenes">
+                        <h:form id="pedidos">
                             <h1><h:outputText value="Orden mesa #{admVenta.mesa}"/></h1>
-                            <p:panelGrid columns="2">
+                            <p:panelGrid columns="4">
                                 <p:outputLabel value="tipo:" for="tipo" />
                                 <p:selectOneMenu id="tipo" value="#{admProducto.tipo}" required="true" requiredMessage="Seleccione un tipo primero">
                                     <f:selectItems value="#{admProducto.tipos}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}"/>
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Producto:" for="idproducto" />
-                                <p:selectOneMenu id="idproducto" value="#{admPedido.pedido.idproducto}" required="true" requiredMessage="The Idproducto field is required.">
+                                <p:selectOneMenu id="idproducto" value="#{admPedido.idProducto}" required="true" requiredMessage="Seleecione un Producto" filter="true" filterMatchMode="contains" >
+                                    <f:selectItem itemLabel="Seleecione un producto" itemValue=""/>
                                     <f:selectItems value="#{admProducto.productos}" var="prd" itemValue="#{prd.idproducto}" itemLabel="#{prd.nombre}" itemDescription="#{prd.descripcion}"/>
+                                    <p:ajax event="valueChange" listener="${admPedido.setProducto(admProducto.findProducto(admPedido.idProducto))}"/>
                                 </p:selectOneMenu>
 
-                                <p:outputLabel value="Extra:" for="idextra" />
-                                <p:selectOneMenu id="idextra" value="#{admPedido.pedido.idextra}" >
-                                    <f:selectItems itemValue="" itemLabel="ninguno" itemDescription="Sin extra"/>
-                                    <f:selectItems value="#{admExtra.extras}" var="extra" itemValue="#{extra.idextra}" itemLabel="#{extra.nombre}" itemDescription="#{extra.descripcion}"/>
-                                </p:selectOneMenu>
-
-                                <h:commandButton value="Agregar" action="response" actionListener="#{admPedido.addPedido(admVenta.mesa)}" onclick="PF('ajaxTabla').click();"  /> 
-                                <p:commandButton id="ajaxTabla" update=":pedidos:formular:tablaPedido" style="display:none;" />
                             </p:panelGrid>
-                            <h:form id="tablaPedido">
-                                <h1><h:outputText value="List"/></h1>
-                                <p:dataTable value="#{admPedido.pedidos}" var="item">
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Idpedido"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idpedido}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Idextra"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idextra}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Idproducto"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idproducto}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Idventa"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idventa}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Estado"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.estado}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </h:form>
-                        </h:form> 
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Extra:" for="idextra" />
+                                <p:selectOneMenu id="idextra" value="#{admPedido.idExtra}"  filter="true" filterMatchMode="contains" >
+                                    <f:selectItem itemLabel="ninguno" itemValue=""/>
+                                    <f:selectItems value="#{admExtra.extras}" var="extra" itemValue="#{extra.idextra}" itemLabel="#{extra.nombre}" itemDescription="#{extra.descripcion}"/>
+                                    <p:ajax event="valueChange" listener="${admPedido.setExtra(admExtra.findExtra(admPedido.idExtra))}"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                            <p:commandButton value="Agregar" actionListener="#{admPedido.addPedido(admVenta.mesa)}" update=":tablaPedido :pedidos" /> 
+                        </h:form>
+                        <h:form id="tablaPedido">
+                            <h1><h:outputText value="List"/></h1>
+                            <p:dataTable value="#{admPedido.pedidos}" var="item" id="tabla">
 
-                    </h:form>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Producto"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idproducto.nombre}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Idextra"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idextra.nombre}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Estado"/>
+                                    </f:facet>
+                                    <h:outputText value="#{admPedido.estado(item.estado)}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <f:view>
+                            <h:form>
+                                <p:panelGrid columns="2">
+                                    <h:commandButton value="Guardar Orden" rendered="#{!admPedido.actualizar}"  actionListener="#{admVenta.generarOrden(admPedido.guardarPedido())}">
+                                        <f:actionListener binding="#{admPedido.generarOrden()}"/>
+                                    </h:commandButton> 
+                                    <h:commandButton value="Actualizar Orden" rendered="#{admPedido.actualizar}" actionListener="#{admPedido.actualizarOrden()}"/> 
+                                    <h:commandButton value="Finalizar Orden"  /> 
+                                </p:panelGrid>
+                            </h:form>
+                        </f:view>
+                    </p:panelGrid>
                 </f:view>
 
             </ui:define>

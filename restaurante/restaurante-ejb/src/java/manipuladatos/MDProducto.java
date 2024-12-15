@@ -4,8 +4,12 @@
  */
 package manipuladatos;
 
+import accesodatos.ProductoFacade;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import modelo.Producto;
 
 /**
  *
@@ -15,6 +19,10 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class MDProducto {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @EJB
+    private ProductoFacade productoFacade;
+
+    public List<Producto> productos(){
+        return productoFacade.findAll();
+    }
 }

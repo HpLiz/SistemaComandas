@@ -15,7 +15,15 @@
         <table cellspacing="10px">
             <tr>
                 <td id="top" colspan="2">
-                    <ui:insert name="top">Top</ui:insert>
+                    <ui:insert name="top">
+                        <div class="navbar">
+                            <p:link value="Vista general" outcome="index.xhtml"/>
+                            <p:link value="Mesas" outcome="mesas.xhtml"/>
+                            <p:link value="Tomar orden" outcome="ordenar.xhtml"/>
+                            <!--<p:link value="Resumen" outcome="gestion_alimentos.xhtml"/> -->
+                            <!-- <p:link value="Salir" outcome="nuevoAcceso.xhtml"/> -->
+                        </div>
+                    </ui:insert>
                 </td>
             </tr>
             <tr>

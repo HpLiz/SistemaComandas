@@ -1,14 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
-        <ui:composition template="./../resources/basico.xhtml">
+        <ui:composition template="./../resources/vista_mesero.xhtml">
 
             <ui:define name="content">
-                content
+                <p:dataGrid var="mesa" value="#{admMesa.mesas}" columns="4">
+                    <p:column>
+                        <p:panel header="#{mesa.numero}" styleClass="#{mesa.estado ? 'mesa-disponible' : 'mesa-ocupada'}">
+                            <h:panelGrid columns="1">
+                                <h:form>
+                               <h:outputText value=" Capacidad: #{mesa.capacidad}" />
+                               <p:panelGrid columns="2">
+                                    <h:commandButton value="Tomar orden" action="tomar_orden?faces-redirect=true" rendered="#{mesa.estado}">
+                                        <f:param name="mesa" value="#{mesa.numero}" />
+                                    </h:commandButton> 
+                                    <h:commandButton value="Actualizar Orden" action="tomar_orden" rendered="#{!mesa.estado}" actionListener="#{admVenta.seleccionMesa(mesa.numero)}" onclick="#{admPedido.actualizarVenta(admVenta.venta)}"/>  
+                                    <h:commandButton value="Finalizar Orden"  /> 
+                                </p:panelGrid>
+                                </h:form>
+                           </h:panelGrid>
+                        </p:panel>
+                    </p:column>
+                </p:dataGrid>
             </ui:define>
 
         </ui:composition>

@@ -14,28 +14,26 @@
             <ui:define name="content">
                 <p:carousel value="#{admVenta.getVentasPorEstado('p')}" var="venta" itemStyle="width:400px; height:450px;">
                     <h3><h:outputText value="Mesa #{venta.nummesa}"/></h3>
-                    <p:dataTable value="#{admPedido.getPedidosPendientes(venta)}" var="pedido" id="tabla">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Producto"/>
-                            </f:facet>
-                            <h:outputText value="#{pedido.idproducto.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Estra"/>
-                            </f:facet>
-                            <h:outputText value="#{pedido.idextra.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <h:form>
+                        <p:dataTable value="#{admPedido.getComidasPendientes(venta)}" var="platillo" id="tabla">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Producto"/>
+                                </f:facet>
+                                <h:outputText value="#{platillo.idproducto.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Extra"/>
+                                </f:facet>
+                                <h:outputText value="#{platillo.idextra.nombre}"/>
+                            </p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Accion"/>
                                 </f:facet>
-                                <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(pedido)}"/>
-                            </h:form>
-                        </p:column>
-                    </p:dataTable>
+                                <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(platillo)}"/>
+                            </p:column>
+                        </p:dataTable>
                 </p:carousel>
 
             </ui:define>

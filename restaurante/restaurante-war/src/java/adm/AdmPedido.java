@@ -117,7 +117,7 @@ public class AdmPedido implements Serializable {
         }
     }
 
-    public void actualizarVenta(Venta v) {
+    public boolean actualizarVenta(Venta v) {
         this.venta = v;
         pedido.setIdventa(venta);
         pedidos.clear();
@@ -125,9 +125,10 @@ public class AdmPedido implements Serializable {
         nuevos.clear();
         actualizar = false;
         if (pedidos.size() > 0) {
-            actualizar = true;
+           return this. actualizar = true;
         }
         System.out.println("Venta actualizada" + venta.getNummesa());
+        return this.actualizar = false;
     }
 
     public void setProducto(Producto p) {
@@ -231,8 +232,22 @@ public class AdmPedido implements Serializable {
     
     // Mostrar y actualizar pedidos pendientes
     
-    public List<Pedido> getPedidosPendientes(Venta v) {
-        return pedidos = mDPedido.getPedidos(v);
+    // Para comidas y postres -> ambos van a la vista de cocina
+    public List<Pedido> getComidasPendientes(Venta v) {
+        List<Pedido> comidas = mDPedido.getPedidos(v);
+        for(Pedido ped: comidas){
+            if(ped.getIdproducto().getTipo().equals("Bebida"))
+                comidas.remove(ped);
+        }
+        return comidas;
+    }
+    public List<Pedido> getBebidasPendientes(Venta v) {
+        List<Pedido> bebidas = mDPedido.getPedidos(v);
+        for(Pedido ped: bebidas){
+            if(!ped.getIdproducto().getTipo().equals("Bebida"))
+                bebidas.remove(ped);
+        }
+        return bebidas;
     }
     public void actualizarEstadoP(Pedido p){
         p.setEstado('t');

@@ -42,4 +42,16 @@ public class VentaFacade extends AbstractFacade<Venta> {
         }
         return ventas;
     }
+    public List<Venta> ventas_por_mesa(int m) {
+        List<Venta> mesas=null;
+        try {
+            Query consultaup = em.createNamedQuery("Venta.findByNummesa");
+            consultaup.setParameter("mesa", m);
+            mesas = (List<Venta>) consultaup.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql"+e);
+            return null;
+        }
+        return mesas;
+    }
 }

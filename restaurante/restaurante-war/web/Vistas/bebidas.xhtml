@@ -8,7 +8,29 @@
         <ui:composition template="./../resources/vista_cocina.xhtml">
 
             <ui:define name="content">
-                content
+                <p:carousel value="#{admVenta.getVentasPorEstado('p')}" var="venta" itemStyle="width:400px; height:450px;">
+                    <h3><h:outputText value="Mesa #{venta.nummesa}"/></h3>
+                        <p:dataTable value="#{admPedido.getBebidasPendientes(venta)}" var="bebida" id="tabla">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Producto"/>
+                                </f:facet>
+                                <h:outputText value="#{bebida.idproducto.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Extra"/>
+                                </f:facet>
+                                <h:outputText value="#{bebida.idextra.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Accion"/>
+                                </f:facet>
+                                <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(bebida)}"/>
+                            </p:column>
+                        </p:dataTable>
+                </p:carousel>
             </ui:define>
 
         </ui:composition>

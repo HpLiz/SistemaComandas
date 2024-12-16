@@ -27,8 +27,12 @@ public class MDVenta {
     }
     
     public List<Venta> ventas_por_estado(char e){
-        System.out.println("buscando 2...");
+        System.out.println("buscando ventas...");
         return ventaFacade.ventas_por_estado(e);
+    }
+    public List<Venta> ventas_por_mesa(int m){
+        System.out.println("buscando mesas...");
+        return ventaFacade.ventas_por_mesa(m);
     }
 
     public void registrarVenta(Venta v){

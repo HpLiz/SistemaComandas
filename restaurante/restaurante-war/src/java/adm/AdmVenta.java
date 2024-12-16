@@ -58,6 +58,11 @@ public class AdmVenta implements Serializable {
         return mesa;
     }
 
+    public void setMesa(int mesa) {
+        this.mesa = mesa;
+    }
+    
+
     public void seleccionMesa(int m) {//setmesa
         mesa = m;
         venta = new Venta();
@@ -86,6 +91,10 @@ public class AdmVenta implements Serializable {
     public List<Venta> getVentasPorEstado(char e) {
         char estado = e;
         return mDVenta.ventas_por_estado(e);
+    }
+    public List<Venta> getVentasPorMesa(int m) {
+        int mesa = m;
+        return mDVenta.ventas_por_mesa(m);
     }
 
     public Venta getVenta() {

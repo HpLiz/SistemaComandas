@@ -16,14 +16,29 @@ h1 {
     color: #D20005;
 }
 
-a:link, a:visited {
-  color: #045491;
-  font-weight : bold;
-  text-decoration: none;
+
+#top {
+    position: relative;
+    background-color: #FFCCE1;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+.navbar {
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    background-color: #E195AB; 
+    padding: 10px; 
 }
 
-a:link:hover, a:visited:hover  {
-  color: #045491;
-  font-weight : bold;
-  text-decoration : underline;
+.navbar p\:link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px; 
+    padding: 5px 10px; 
+}
+
+.navbar p\:link:hover {
+    text-decoration: underline; 
 }

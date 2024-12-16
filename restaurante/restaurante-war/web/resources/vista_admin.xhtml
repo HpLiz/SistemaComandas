@@ -9,23 +9,28 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/tableLayout.css"/>
-        <title>Órdenes</title>
+        <title>Facelets Template</title>
     </h:head>
 
     <h:body>
-        <table cellspacing="10px" align="center" width="100%">
+        <table cellspacing="10px">
             <tr>
-                <td id="top">
-                    <ui:insert name="top">Vista Cocina
+                <td id="top" colspan="2">
+                    <ui:insert name="top">
                         <div class="navbar">
-                            <p:clock pattern="HH:mm:ss dd.MM.yyyy" />
+                            <p:link value="Inicio" outcome="dashboard.xhtml"/>
+                            <p:link value="Empleados" outcome="gestion_empleados.xhtml"/>
+                            <p:link value="Reportes" outcome="gestion_reportes.xhtml"/>
                             <p:link value="Salir" outcome="acceso.xhtml"/>
                         </div>
                     </ui:insert>
                 </td>
             </tr>
             <tr>
-                <td id="content" align="center" width="100%">
+                <td id="left">
+                    <ui:insert name="left">Left</ui:insert>
+                </td>
+                <td id="content">
                     <ui:insert name="content">Content</ui:insert>
                 </td>
             </tr>

@@ -19,9 +19,7 @@
                                 <h:form>
                                <h:outputText value=" Capacidad: #{mesa.capacidad}" />
                                <p:panelGrid columns="2">
-                                    <h:commandButton value="Tomar orden" action="tomar_orden?faces-redirect=true" rendered="#{mesa.estado}">
-                                        <f:param name="mesa" value="#{mesa.numero}" />
-                                    </h:commandButton> 
+                                    <h:commandButton value="Tomar orden" action="tomar_orden" rendered="#{mesa.estado}" actionListener="#{admVenta.seleccionMesa(mesa.numero)}" onclick="#{admPedido.actualizarVenta(admVenta.venta)}"/>
                                     <h:commandButton value="Actualizar Orden" action="tomar_orden" rendered="#{!mesa.estado}" actionListener="#{admVenta.seleccionMesa(mesa.numero)}" onclick="#{admPedido.actualizarVenta(admVenta.venta)}"/>  
                                     <h:commandButton value="Finalizar Orden"  /> 
                                 </p:panelGrid>

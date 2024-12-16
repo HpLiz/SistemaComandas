@@ -3,30 +3,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/tableLayout.css"/>
-        <title>Órdenes</title>
+        <title>Facelets Template</title>
     </h:head>
 
     <h:body>
-        <table cellspacing="10px" align="center" width="100%">
+        <table cellspacing="10px">
             <tr>
                 <td id="top">
-                    <ui:insert name="top">Vista Cocina
-                        <div class="navbar">
-                            <p:clock pattern="HH:mm:ss dd.MM.yyyy" />
-                            <p:link value="Salir" outcome="acceso.xhtml"/>
-                        </div>
-                    </ui:insert>
+                    <ui:insert name="top">Bienvenido al SSS</ui:insert>
                 </td>
             </tr>
             <tr>
-                <td id="content" align="center" width="100%">
+                <td id="content">
                     <ui:insert name="content">Content</ui:insert>
+                </td>
+            </tr>
+            <tr>
+                <td id="bottom">
+                    <ui:insert name="bottom">Bottom</ui:insert>
                 </td>
             </tr>
         </table>

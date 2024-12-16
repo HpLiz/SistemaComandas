@@ -31,7 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByAmaterno", query = "SELECT u FROM Usuario u WHERE u.amaterno = :amaterno"),
     @NamedQuery(name = "Usuario.findByApaterno", query = "SELECT u FROM Usuario u WHERE u.apaterno = :apaterno"),
-    @NamedQuery(name = "Usuario.findByPuesto", query = "SELECT u FROM Usuario u WHERE u.puesto = :puesto")})
+    @NamedQuery(name = "Usuario.findByPuesto", query = "SELECT u FROM Usuario u WHERE u.puesto = :puesto"),
+    @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
+    @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
+    @NamedQuery(name = "Usuario.findByUsuarioPassword", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password")})
 public class Usuario implements Serializable {
 
     @Basic(optional = false)
@@ -54,6 +57,16 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PUESTO")
     private String puesto;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "USUARIO")
+    private String usuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "PASSWORD")
+    private String password;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -141,6 +154,22 @@ public class Usuario implements Serializable {
 
     public void setPuesto(String puesto) {
         this.puesto = puesto;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

@@ -97,7 +97,7 @@
                                         <f:actionListener binding="#{admPedido.generarOrden()}"/>
                                     </h:commandButton> 
                                     <h:commandButton value="Actualizar Orden" rendered="#{admPedido.actualizar}" actionListener="#{admPedido.actualizarOrden()}"/> 
-                                    <h:commandButton value="Finalizar Orden"  /> 
+                                    <h:commandButton value="Finalizar Orden"  action="finalizarVenta"/> 
                                 </p:panelGrid>
                             </h:form>
                         </f:view>

@@ -36,6 +36,10 @@ public class AdmVenta implements Serializable {
     private int mesa = 0;
     private boolean seleccion = false;
 
+    private List<String> tipospago= new ArrayList<String>(Arrays.asList("Efectivo","Transferencia"));
+    private Double pago;
+    private String tipopago;
+    
     public AdmVenta() {
         venta = new Venta();
         mesas = new ArrayList<Integer>();
@@ -130,6 +134,44 @@ public class AdmVenta implements Serializable {
         }
         return false;
     }
+    
+    public Double getImporte(){
+        return 0.0;
+    }
+    
+    public boolean isEfectivo(){
+        return false;
+    }
+    
+    public Double cambio(){
+        return 0.0;
+    }
+
+    public List<String> getTipospago() {
+        return tipospago;
+    }
+
+    public void setTipospago(List<String> tipospago) {
+        this.tipospago = tipospago;
+    }
+
+    public Double getPago() {
+        return pago;
+    }
+
+    public void setPago(Double pago) {
+        this.pago = pago;
+    }
+
+    public String getTipopago() {
+        return tipopago;
+    }
+
+    public void setTipopago(String tipopago) {
+        this.tipopago = tipopago;
+    }
+    
+    
 }
 
  

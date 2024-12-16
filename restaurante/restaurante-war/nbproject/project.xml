@@ -10,6 +10,17 @@
                 <library dirs="100">
                     <file>${reference.restaurante-ejb.dist}</file>
                 </library>
+                <library dirs="200">
+                    <file>${libs.primefaces.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.itext-2.1.7.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>

@@ -31,15 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByAmaterno", query = "SELECT u FROM Usuario u WHERE u.amaterno = :amaterno"),
     @NamedQuery(name = "Usuario.findByApaterno", query = "SELECT u FROM Usuario u WHERE u.apaterno = :apaterno"),
-    @NamedQuery(name = "Usuario.findByPuesto", query = "SELECT u FROM Usuario u WHERE u.puesto = :puesto")})
+    @NamedQuery(name = "Usuario.findByPuesto", query = "SELECT u FROM Usuario u WHERE u.puesto = :puesto"),
+    @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
+    @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
+    @NamedQuery(name = "Usuario.findByUsuarioPassword", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password")})
 public class Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "IDUSUARIO")
-    private Integer idusuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -60,6 +57,23 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PUESTO")
     private String puesto;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "USUARIO")
+    private String usuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "PASSWORD")
+    private String password;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDUSUARIO")
+    private Integer idusuario;
 
     public Usuario() {
     }
@@ -68,12 +82,14 @@ public class Usuario implements Serializable {
         this.idusuario = idusuario;
     }
 
-    public Usuario(Integer idusuario, String nombre, String amaterno, String apaterno, String puesto) {
+    public Usuario(Integer idusuario, String nombre, String amaterno, String apaterno, String puesto, String usuario, String password) {
         this.idusuario = idusuario;
         this.nombre = nombre;
         this.amaterno = amaterno;
         this.apaterno = apaterno;
         this.puesto = puesto;
+        this.usuario = usuario;
+        this.password = password;
     }
 
     public Integer getIdusuario() {
@@ -82,6 +98,31 @@ public class Usuario implements Serializable {
 
     public void setIdusuario(Integer idusuario) {
         this.idusuario = idusuario;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idusuario != null ? idusuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Usuario[ idusuario=" + idusuario + " ]";
     }
 
     public String getNombre() {
@@ -116,29 +157,20 @@ public class Usuario implements Serializable {
         this.puesto = puesto;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idusuario != null ? idusuario.hashCode() : 0);
-        return hash;
+    public String getUsuario() {
+        return usuario;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
-            return false;
-        }
-        Usuario other = (Usuario) object;
-        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
-            return false;
-        }
-        return true;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    @Override
-    public String toString() {
-        return "modelo.Usuario[ idusuario=" + idusuario + " ]";
+    public String getPassword() {
+        return password;
     }
-    
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

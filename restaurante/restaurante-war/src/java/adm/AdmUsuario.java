@@ -7,6 +7,7 @@ package adm;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -25,8 +26,10 @@ public class AdmUsuario implements Serializable {
     private MDUsuario mDUsuario;
     
     private Usuario usuario;
+    private List<Usuario> usuarios;
     private String pagina = "acceso";
     private String mensaje = "";
+    private String gestion[] = {"false","false","false"};
 
     public String pagina(){
         return pagina;
@@ -34,6 +37,13 @@ public class AdmUsuario implements Serializable {
 
     public Usuario getUsuario() {
         return usuario;
+    }
+
+    public List<Usuario> getUsuarios(){
+        return mDUsuario.usuarios();
+    }
+    public void cargarUsuarios(){
+        this.usuarios = mDUsuario.usuarios();
     }
 
     public void setUsuario(Usuario usuario) {
@@ -56,6 +66,17 @@ public class AdmUsuario implements Serializable {
         this.mensaje = mensaje;
     }
     
+    public void gestion(int ng, Usuario u){
+        setUsuario(u);
+        for(int n=0; n<3; n++)
+            if(n==ng)
+                gestion[ng]="true";
+            else
+                gestion[n]="false";
+    }
+    public String getGestion(int ng){
+        return gestion[ng];
+    }
     
     public Usuario acceso(){
         System.out.println(usuario.getUsuario() + " " + usuario.getPassword());

@@ -38,6 +38,10 @@ public class Pedido implements Serializable {
     @NotNull
     @Column(name = "ESTADO")
     private Character estado;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CANTIDAD")
+    private int cantidad;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -131,6 +135,14 @@ public class Pedido implements Serializable {
 
     public void setEstado(Character estado) {
         this.estado = estado;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
     
 }

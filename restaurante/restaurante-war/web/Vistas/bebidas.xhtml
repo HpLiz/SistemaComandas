@@ -17,6 +17,12 @@
                         <p:dataTable value="#{admPedido.getBebidasPendientes(venta)}" var="bebida" id="tabla">
                             <p:column>
                                 <f:facet name="header">
+                                    <h:outputText value="Cantidad"/>
+                                </f:facet>
+                                <h:outputText value="#{bebida.cantidad}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
                                     <h:outputText value="Producto"/>
                                 </f:facet>
                                 <h:outputText value="#{bebida.idproducto.nombre}"/>

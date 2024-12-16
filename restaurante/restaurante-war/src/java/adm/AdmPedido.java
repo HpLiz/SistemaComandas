@@ -225,5 +225,15 @@ public class AdmPedido implements Serializable {
             contexto.addMessage(null, mensaje);
         }
     }
+    
+    // Mostrar y actualizar pedidos pendientes
+    
+    public List<Pedido> getPedidosPendientes(Venta v) {
+        return pedidos = mDPedido.getPedidos(v);
+    }
+    public void actualizarEstadoP(Pedido p){
+        p.setEstado('t');
+        mDPedido.actualizarPedido(p);
+    }
 
 }

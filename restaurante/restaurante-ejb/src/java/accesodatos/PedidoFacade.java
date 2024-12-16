@@ -42,4 +42,17 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
         }
         return pedidos;
     }
+    
+    //Este metodo recupera los pedidos con estado pendiente
+    public List<Pedido> pedidosPendientes(char estado){
+        List<Pedido> pedidos=null;
+        try {
+            Query consulta = em.createNamedQuery("Pedido.findByEstadoMesa");
+            consulta.setParameter("estado", estado);
+            pedidos = (List<Pedido>) consulta.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return pedidos;
+    }
 }

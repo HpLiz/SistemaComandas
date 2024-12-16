@@ -61,7 +61,7 @@ public class AdmVenta implements Serializable {
     public void seleccionMesa(int m) {//setmesa
         mesa = m;
         venta = new Venta();
-        ventas = mDVenta.ventasEstado('p');
+        ventas = mDVenta.ventas_por_estado('p');
         for (Venta v : ventas) {
             if (v.getNummesa() == m) {
                 venta = v;
@@ -82,6 +82,10 @@ public class AdmVenta implements Serializable {
 
     public List<Venta> getVentas() {
         return ventas;
+    }
+    public List<Venta> getVentasPorEstado(char e) {
+        char estado = e;
+        return mDVenta.ventas_por_estado(e);
     }
 
     public Venta getVenta() {

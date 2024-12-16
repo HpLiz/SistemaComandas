@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/vista_cocina.xhtml">
+
+            <ui:define name="content">
+                <p:carousel value="#{admVenta.getVentasPorEstado('p')}" var="venta" itemStyle="width:400px; height:450px;">
+                    <h3><h:outputText value="Mesa #{venta.nummesa}"/></h3>
+                        <p:dataTable value="#{admPedido.getPedidosPendientes(venta)}" var="pedido" id="tabla">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Producto"/>
+                                </f:facet>
+                                <h:outputText value="#{pedido.idproducto.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estra"/>
+                                </f:facet>
+                                <h:outputText value="#{pedido.idextra.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Accion"/>
+                                </f:facet>
+                                <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(pedido)}"/>
+                            </p:column>
+                        </p:dataTable>
+                </p:carousel>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

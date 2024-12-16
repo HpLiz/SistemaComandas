@@ -26,9 +26,9 @@ public class MDVenta {
         return ventaFacade.findAll();
     }
     
-    public List<Venta> ventasEstado(char e){
+    public List<Venta> ventas_por_estado(char e){
         System.out.println("buscando 2...");
-        return ventaFacade.ventas(e);
+        return ventaFacade.ventas_por_estado(e);
     }
 
     public void registrarVenta(Venta v){

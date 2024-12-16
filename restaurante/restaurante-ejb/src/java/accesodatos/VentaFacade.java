@@ -30,7 +30,7 @@ public class VentaFacade extends AbstractFacade<Venta> {
         super(Venta.class);
     }
 
-    public List<Venta> ventas(char est) {
+    public List<Venta> ventas_por_estado(char est) {
         List<Venta> ventas=null;
         try {
             Query consultaup = em.createNamedQuery("Venta.findByEstado");

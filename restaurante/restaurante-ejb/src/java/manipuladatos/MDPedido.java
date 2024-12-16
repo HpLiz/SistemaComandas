@@ -30,11 +30,18 @@ public class MDPedido {
     public void registrarPedido(Pedido p) {
         pedidoFacade.create(p);
     }
+    public void actualizarPedido(Pedido p) {
+        pedidoFacade.edit(p);
+    }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
     public List<Pedido> pedidos() {
         return pedidoFacade.findAll();
+    }
+    public List<Pedido> pedidosPendientes() {
+        char estado = 'p';
+        return pedidoFacade.pedidosPendientes(estado);
     }
 
 }

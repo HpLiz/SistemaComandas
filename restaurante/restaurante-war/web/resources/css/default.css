@@ -16,7 +16,6 @@ h1 {
     color: #D20005;
 }
 
-
 #top {
     position: relative;
     background-color: #FFCCE1;
@@ -41,4 +40,33 @@ h1 {
 
 .navbar p\:link:hover {
     text-decoration: underline; 
+}
+/* Ajustes adicionales para el carrusel */
+.carousel {
+    display: flex;
+    overflow-x: auto; /* Para el desplazamiento horizontal */
+    width: 100%; /* Ocupa toda la pantalla */
+    white-space: nowrap; /* Evita que los ítems se desbordaren */
+}
+
+.carousel-item {
+    display: inline-block;
+    width: 300px; /* Ancho de cada ítem */
+    margin-right: 10px; /* Espacio entre ítems */
+    background-color: #f2f2f2; /* Color de fondo para cada ítem */
+    padding: 15px;
+    box-sizing: border-box; /* Asegura que el padding y el borde no afecten el ancho */
+    border-radius: 5px;
+    text-align: center;
+    /* Ajusta el tamaño de texto y demás para mejorar la visibilidad */
+    font-size: 14px;
+}
+
+.carousel-item h3 {
+    font-size: 18px; /* Aumenta el tamaño del título */
+    margin-bottom: 10px;
+}
+
+.carousel-item p {
+    font-size: 14px; /* Ajusta el tamaño del texto descriptivo */
 }

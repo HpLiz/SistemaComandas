@@ -39,12 +39,12 @@ body {
   text-decoration : underline;
 }
 
-.mesa-disponible {
+.mesa-ocupada {
     background-color: #e6ffe6; /* Verde suave */
     border: 1px solid #b3ffb3;
 }
 
-.mesa-ocupada {
+.mesa-disponible {
     background-color: #ffe6e6; /* Rojo suave */
     border: 1px solid #ffb3b3;
 }

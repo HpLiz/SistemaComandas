@@ -70,7 +70,9 @@ public class AdmPedido implements Serializable {
     }
 
     public List<Pedido> getPedidos() {
-        return pedidos;//= mDPedido.pedidos();
+        List<Pedido> combinados = new ArrayList<>(pedidos);
+        combinados.addAll(nuevos); 
+        return combinados;
     }
 
     public Pedido getPedido() {
@@ -100,7 +102,7 @@ public class AdmPedido implements Serializable {
                 if (valid) {
                     idExtra = 0;
                     idProducto = 0;
-                    pedidos.add(pedido);
+                    //pedidos.add(pedido);
                     nuevos.add(pedido);
                     pedido = new Pedido();
                     //System.out.println("pedidos" + pedidos.toString());
@@ -120,6 +122,7 @@ public class AdmPedido implements Serializable {
         pedido.setIdventa(venta);
         pedidos.clear();
         pedidos = mDPedido.getPedidos(venta);
+        nuevos.clear();
         actualizar = false;
         if (pedidos.size() > 0) {
             actualizar = true;
@@ -141,7 +144,7 @@ public class AdmPedido implements Serializable {
         switch (e) {
             case 'p':
                 return "Pendiente";
-            case 'f':
+            case 't':
                 return "Finalizado";
             case 'c':
                 return "Cancelado";
@@ -180,11 +183,11 @@ public class AdmPedido implements Serializable {
             } else {
                 mensaje = new FacesMessage("Registrado Correctamente...");
                 contexto.addMessage(null, mensaje);
-                nuevos.forEach(p -> {
+                for(Pedido p:nuevos)
                     mDPedido.registrarPedido(p);
-                });
                 nuevos.clear();
                 actualizar = true;
+                pedidos = mDPedido.getPedidos(venta);
             }
 
         } catch (Exception e) {
@@ -213,10 +216,10 @@ public class AdmPedido implements Serializable {
             } else {
                 mensaje = new FacesMessage("Actualizado Correctamente...");
                 contexto.addMessage(null, mensaje);
-                nuevos.forEach(p -> {
+                for(Pedido p:nuevos)
                     mDPedido.registrarPedido(p);
-                });
                 nuevos.clear();
+                pedidos = mDPedido.getPedidos(venta);
             }
 
         } catch (Exception e) {
@@ -235,5 +238,13 @@ public class AdmPedido implements Serializable {
         p.setEstado('t');
         mDPedido.actualizarPedido(p);
     }
+    
+    public void cancelarPedido(Pedido p){
+        p.setEstado('c');
+        if(!nuevos.contains(p))
+            mDPedido.actualizarPedido(p);
+    }
+    
+    
 
 }

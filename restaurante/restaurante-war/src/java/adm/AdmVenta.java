@@ -120,6 +120,16 @@ public class AdmVenta implements Serializable {
             }
         }
     }
+    
+    public boolean ocupada(int m){
+        ventas = mDVenta.ventas_por_estado('p');
+        for (Venta v : ventas) {
+            if (v.getNummesa() == m) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
  

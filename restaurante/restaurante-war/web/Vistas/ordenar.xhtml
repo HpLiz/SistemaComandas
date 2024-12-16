@@ -19,7 +19,7 @@
                     <h:form id="menu">
                         <p:menu>
                             <c:forEach var="item" items="#{admVenta.mesas}" rendered="true">                                
-                                <p:menuitem value="mesa #{item}" actionListener="#{admVenta.seleccionMesa(item)}" update=":ordenes" action="#{admPedido.actualizarVenta(admVenta.venta)}">
+                                <p:menuitem value="mesa #{item}" actionListener="#{admVenta.seleccionMesa(item)}" update=":ordenes" action="#{admPedido.actualizarVenta(admVenta.venta)}" style="#{admVenta.ocupada(item) ? 'background-color: #9bf184 ; color: #000000;' : 'background-color: #ff5050 ; color: #d7d7d7 ;'}}">
                                 </p:menuitem>
                             </c:forEach>
                         </p:menu>
@@ -81,6 +81,12 @@
                                         <h:outputText value="Estado"/>
                                     </f:facet>
                                     <h:outputText value="#{admPedido.estado(item.estado)}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Opciones"/>
+                                    </f:facet>
+                                    <h:commandButton rendered="#{item.estado=='p'}" value="Cancelar" actionListener="#{admPedido.cancelarPedido(item)}"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>

@@ -40,7 +40,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Venta.findByImporte", query = "SELECT v FROM Venta v WHERE v.importe = :importe"),
     @NamedQuery(name = "Venta.findByNummesa", query = "SELECT v FROM Venta v WHERE v.nummesa = :nummesa"),
     @NamedQuery(name = "Venta.findByEstado", query = "SELECT v FROM Venta v WHERE v.estado = :estado"),
-    @NamedQuery(name = "Venta.findByTipopago", query = "SELECT v FROM Venta v WHERE v.tipopago = :tipopago")})
+    @NamedQuery(name = "Venta.findByTipopago", query = "SELECT v FROM Venta v WHERE v.tipopago = :tipopago"),
+    @NamedQuery(name = "Venta.findTiempoMesas",
+            query = "SELECT v.fecha AS fecha, v.nummesa AS mesa, COUNT(v.nummesa) AS total "
+            + "FROM Venta v "
+            + "WHERE v.fecha BETWEEN :fechaInicio AND :fechaFin "
+            + "GROUP BY v.nummesa, v.fecha")
+
+})
 public class Venta implements Serializable {
 
     @Basic(optional = false)
@@ -95,7 +102,6 @@ public class Venta implements Serializable {
         this.idventa = idventa;
     }
 
-
     @XmlTransient
     public List<Pedido> getPedidoList() {
         return pedidoList;
@@ -129,7 +135,6 @@ public class Venta implements Serializable {
     public String toString() {
         return "modelo.Venta[ idventa=" + idventa + " ]";
     }
-
 
     public Double getImporte() {
         return importe;
@@ -170,5 +175,5 @@ public class Venta implements Serializable {
     public void setEstado(Character estado) {
         this.estado = estado;
     }
-    
+
 }

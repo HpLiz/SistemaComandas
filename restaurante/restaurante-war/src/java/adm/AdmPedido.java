@@ -72,11 +72,12 @@ public class AdmPedido implements Serializable {
         nuevos = new ArrayList<Pedido>();
         pedidos = new ArrayList<Pedido>();
     }
+
     @PostConstruct
     public void init() {
         comidas = getComidasPendientes(venta);
         bebidas = getBebidasPendientes(venta);
-   }
+    }
 
     public List<Pedido> getPedidos() {
         return pedidos;//= mDPedido.pedidos();
@@ -252,21 +253,23 @@ public class AdmPedido implements Serializable {
     // Mostrar y actualizar pedidos pendientes
     // Para comidas y postres -> ambos van a la vista de cocina
     public List<Pedido> getComidasPendientes(Venta v) {
-        List<Pedido> cm = mDPedido.getPedidos(v);
+        List<Pedido> cm = mDPedido.pedidosEstadoVenta(v, 'p');
         List<Pedido> auxc = new ArrayList<Pedido>();
-        for(Pedido ped: cm){
-            if(!ped.getIdproducto().getTipo().equals("Bebida"))
+        for (Pedido ped : cm) {
+            if (!ped.getIdproducto().getTipo().equals("Bebida")) {
                 auxc.add(ped);
+            }
         }
         return auxc;
     }
 
     public List<Pedido> getBebidasPendientes(Venta v) {
-        List<Pedido> bb = mDPedido.getPedidos(v);
+        List<Pedido> bb = mDPedido.pedidosEstadoVenta(v,'p');
         List<Pedido> auxb = new ArrayList<Pedido>();
-        for(Pedido ped: bb){
-            if(ped.getIdproducto().getTipo().equals("Bebida"))
+        for (Pedido ped : bb) {
+            if (ped.getIdproducto().getTipo().equals("Bebida")) {
                 auxb.add(ped);
+            }
         }
         return auxb;
     }
@@ -293,6 +296,13 @@ public class AdmPedido implements Serializable {
             }
         }
         return importe;
+    }
+
+    public void cancelarPedido(Pedido p) {
+        p.setEstado('c');
+        if (!nuevos.contains(p)) {
+            mDPedido.actualizarPedido(p);
+        }
     }
 
     public void cancelarPorFinalizacion(Venta v) {

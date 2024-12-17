@@ -70,4 +70,8 @@ public class AdmProducto implements Serializable {
         }
         return null;
     }
+    
+    public Producto buscar(int id){
+        return mDProducto.buscar(id);
+    }
 }

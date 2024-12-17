@@ -179,6 +179,7 @@ public class AdmVenta implements Serializable {
             System.out.println("pagando...");
             try {
                 venta.setEstado('t');
+                venta.setImporte(importe);
                 mDVenta.actualizarVenta(venta);
                 pagoCorrecto = true;
                 System.out.println("finalizado");

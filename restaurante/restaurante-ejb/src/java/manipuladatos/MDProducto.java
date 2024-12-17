@@ -33,4 +33,8 @@ public class MDProducto {
     public Producto productoID(int id){
         return productoFacade.produtoID(id);
     }
+    
+    public Producto buscar(int id){
+        return productoFacade.find(id);
+    }
 }

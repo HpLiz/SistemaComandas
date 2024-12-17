@@ -68,4 +68,18 @@ public class VentaFacade extends AbstractFacade<Venta> {
         }
         return ventas;
     }
+    
+    public List<Object[]> cantidad_mesa_por_periodo(Date fi, Date ff) {
+        List<Object[]> cantidades = null;
+        try {
+            Query consulta = em.createNamedQuery("Venta.findTiempoMesas");
+            consulta.setParameter("fechaInicio", fi);
+            consulta.setParameter("fechaFin", ff);
+            cantidades = (List) consulta.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql" + e);
+            return null;
+        }
+        return cantidades;
+    }
 }

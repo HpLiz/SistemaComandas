@@ -31,9 +31,9 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
     public PedidoFacade() {
         super(Pedido.class);
     }
-    
+
     public List<Pedido> pedidos(Venta v) {
-        List<Pedido> pedidos=null;
+        List<Pedido> pedidos = null;
         try {
             Query consultaup = em.createNamedQuery("Pedido.findByVenta");
             consultaup.setParameter("idventa", v);
@@ -43,41 +43,59 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
         }
         return pedidos;
     }
-    
+
     //Este metodo recupera los pedidos con estado pendiente
-    public List<Pedido> pedidosPendientes(char estado){
-        List<Pedido> pedidos=null;
+    public List<Pedido> pedidosPendientes(char estado) {
+        List<Pedido> pedidos = null;
         try {
             Query consulta = em.createNamedQuery("Pedido.findByEstadoMesa");
             consulta.setParameter("estado", estado);
             pedidos = (List<Pedido>) consulta.getResultList();
         } catch (Exception e) {
+            System.out.println("Error sql" + e);
+
             return null;
         }
         return pedidos;
     }
-    
-    public List<Pedido> pedidos_por_periodo(Date fi, Date ff){
-        List<Pedido> pedidos=null;
+
+    public List<Pedido> pedidosEstadoVenta(Venta v, char estado) {
+        List<Pedido> pedidos = null;
+        try {
+            Query consulta = em.createNamedQuery("Pedido.findByEstadoMesaVenta");
+            consulta.setParameter("estado", estado);
+            consulta.setParameter("idventa", v);
+            pedidos = (List<Pedido>) consulta.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql" + e);
+            return null;
+        }
+        return pedidos;
+    }
+
+    public List<Pedido> pedidos_por_periodo(Date fi, Date ff) {
+        List<Pedido> pedidos = null;
         try {
             Query consulta = em.createNamedQuery("Pedido.findByPeriodo");
             consulta.setParameter("fechaInicio", fi);
             consulta.setParameter("fechaFin", ff);
             pedidos = (List<Pedido>) consulta.getResultList();
         } catch (Exception e) {
+            System.out.println("Error sql" + e);
             return null;
         }
         return pedidos;
     }
-    
-    public List<Integer> cantidad_por_periodo(Date fi, Date ff){
-        List<Integer> cantidades = null;
-        try{
+
+    public List<Object[]> cantidad_por_periodo(Date fi, Date ff) {
+        List<Object[]> cantidades = null;
+        try {
             Query consulta = em.createNamedQuery("Pedido.findCantidadPeriodo");
             consulta.setParameter("fechaInicio", fi);
             consulta.setParameter("fechaFin", ff);
-            cantidades = (List<Integer>) consulta.getResultList();
-        } catch (Exception e){
+            cantidades = (List) consulta.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql" + e);
             return null;
         }
         return cantidades;

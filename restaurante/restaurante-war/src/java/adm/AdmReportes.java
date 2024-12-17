@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import manipuladatos.MDPedido;
 import manipuladatos.MDVenta;
 import modelo.Pedido;
+import modelo.Producto;
 import modelo.Venta;
 
 /**
@@ -28,15 +29,17 @@ public class AdmReportes implements Serializable {
     @EJB
     private MDVenta mDVenta;
     
-    private List<Pedido> productos;
+    private List<Pedido> pedidos;
     private List<Venta> ventas;
+    private List<Producto> productos;
+    private List<Object[]> multiuso;
     private double importeTotal = 0;
     private Date fechaInicio;
     private Date fechaFin;
-    private String gestion[] = {"false","false","false"};
+    private String gestion[] = {"false","false","false","false","false"};
     
     public void gestion(int ng){
-        for(int n=0; n<3; n++)
+        for(int n=0; n<gestion.length; n++)
             if(n==ng)
                 gestion[ng]="true";
             else
@@ -70,11 +73,27 @@ public class AdmReportes implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public List<Pedido> getProductos() {
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<Object[]> getMultiuso() {
+        return multiuso;
+    }
+
+    public void setMultiuso(List<Object[]> multiuso) {
+        this.multiuso = multiuso;
+    }
+
+    public List<Producto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Pedido> productos) {
+    public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
 
@@ -86,15 +105,29 @@ public class AdmReportes implements Serializable {
         this.ventas = ventas;
     }
     
-    public void cargarProductos(){
+    public void cargarPedidos(){
         System.out.println("Cargando pedidos...");
-        this.productos = mDPedido.pedidos_por_periodo(fechaInicio, fechaInicio);
-        System.out.println("pedidos encontrados..."+productos.size());
+        this.pedidos = mDPedido.pedidos_por_periodo(fechaInicio, fechaFin);
+        System.out.println("pedidos encontrados..."+pedidos.size());
         
     }
+    
+    public void cargarProductos(){
+        System.out.println("Cargando productos...");
+        multiuso = mDPedido.cantidad_por_periodo(fechaInicio, fechaFin);
+        System.out.println("productos encontrados..."+multiuso.size());
+        
+    }
+    public void cargarMesas(){
+        System.out.println("Cargando mesas...");
+        multiuso = mDVenta.cantidad_mesa_por_periodo(fechaInicio, fechaFin);
+        System.out.println("mesas encontrados..."+multiuso.size());
+        
+    }
+    
     public void cargarVentas(){
         System.out.println("Cargando ventas...");
-        this.ventas = mDVenta.ventas_por_periodo(fechaInicio, fechaInicio);
+        this.ventas = mDVenta.ventas_por_periodo(fechaInicio, fechaFin);
         System.out.println("ventas encontradas..."+ventas.size());
     }
     
@@ -113,6 +146,8 @@ public class AdmReportes implements Serializable {
     }
     public void crearReporte(){
     }
+    
+
     
     // Consultas
     

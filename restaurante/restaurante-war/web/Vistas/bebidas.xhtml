@@ -14,6 +14,7 @@
             <ui:define name="content">
                 <p:carousel value="#{admVenta.getVentasPorEstado('p')}" var="venta" itemStyle="width:400px; height:450px;">
                     <h3><h:outputText value="Mesa #{venta.nummesa}"/></h3>
+                    <h:form>
                         <p:dataTable value="#{admPedido.getBebidasPendientes(venta)}" var="bebida" id="tabla">
                             <p:column>
                                 <f:facet name="header">
@@ -40,6 +41,7 @@
                                 <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(bebida)}"/>
                             </p:column>
                         </p:dataTable>
+                    </h:form>    
                 </p:carousel>
             </ui:define>
 

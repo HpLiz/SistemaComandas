@@ -8,15 +8,15 @@
 
     <body>
 
-        <ui:composition template="./../resources/ticket.xhtml">
+        <ui:composition template="./../resources/ticket_venta.xhtml">
 
-            <ui:define name="content">
+            <ui:define name="left">
                 <f:view>
                     <h:form id="ticket">
                         <p:growl id="mensaje" showDetail="true" life="3000" />
 
 
-                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h1><h:outputText value="Detalles de la Venta"/></h1>
                         <p:panelGrid columns="2">
                             <h:outputText value="Idventa:"/>
                             <h:outputText value="#{admVenta.venta.idventa}" title="Idventa"/>
@@ -33,7 +33,7 @@
                             <h:outputText value="#{admPedido.getImporte()}" title="Importe"/>
 
                             <p:outputLabel value="Tipopago:" for="tipopago" />
-                            <p:selectOneMenu id="tipopago" value="#{admVenta.tipopago}" >
+                            <p:selectOneMenu id="tipopago" value="#{admVenta.tipopago}" disabled="#{admVenta.venta.estado!='p'}" >
                                 <f:selectItem itemLabel="Seleccione una opcion" itemValue=""/>
                                 <f:selectItems value="#{admVenta.tipospagos}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}" >
                                 </f:selectItems>
@@ -42,23 +42,61 @@
                         </p:panelGrid>
                         <p:panelGrid columns="2" id="cobro" rendered="#{admVenta.efectivo}">
                             <p:outputLabel value="Paga con:" for="pagoInput" />
-                            <p:inputText id="pagoInput" value="#{admVenta.pago}" title="cobro" disabled="#{!(admVenta.venta.estado=='t')}" />
+                            <p:inputText id="pagoInput" value="#{admVenta.pago}" title="cobro" disabled="#{admVenta.venta.estado!='p'}" />
 
                             <h:outputLabel value="Cambio:" for="cambio"/>
                             <h:outputText value="#{admVenta.cambio(admPedido.importe)}" title="Cambio" id="cambio"/>
 
                         </p:panelGrid>
 
-                        <p:commandButton value="Finalizars" rendered="#{!(admVenta.venta.estado=='t')}" actionListener="#{admVenta.finalizar(admPedido.getImporte())}" update=":ticket" >
+                        <p:commandButton value="Finalizars" rendered="#{!(admVenta.venta.estado=='t')}" actionListener="#{admVenta.finalizar(admPedido.getImporte())}" update=":ticket :ticketDetalles" >
                             <f:actionListener binding="#{admPedido.cancelarPorFinalizacion(admVenta.venta)}" />
 
                         </p:commandButton>
                         <p:commandButton value="Regresar" rendered="#{admVenta.venta.estado=='t'}" action="mesas">
 
                         </p:commandButton>
+                        <p:commandButton value="Cancelar" rendered="#{admVenta.venta.estado!='t'}" action="mesas" immediate="true"/>
                     </h:form>
                 </f:view>
             </ui:define>
+            
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="ticketDetalles">
+                        <h1><h:outputText value="Pedidos"/></h1>
+                        <p:dataTable value="#{admPedido.pedidos}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Producto"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idproducto.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Extra"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idextra.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estado"/>
+                                </f:facet>
+                                <h:outputText value="#{admPedido.estado(item.estado)}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Cantidad"/>
+                                </f:facet>
+                                <h:outputText value="#{item.cantidad}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+                
+            </ui:define>
+            
 
         </ui:composition>
 

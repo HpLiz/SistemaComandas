@@ -49,4 +49,8 @@ public class MDVenta {
     public void actualizarVenta(Venta venta) {
         ventaFacade.edit(venta);
     }
+    
+    public List<Object[]> cantidad_mesa_por_periodo(Date fi, Date ff){
+        return ventaFacade.cantidad_mesa_por_periodo(fi, ff);
+    }
 }

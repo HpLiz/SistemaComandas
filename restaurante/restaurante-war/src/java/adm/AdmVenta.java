@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import manipuladatos.MDVenta;
 import modelo.Venta;
 
@@ -24,6 +25,9 @@ public class AdmVenta implements Serializable {
 
     @EJB
     private MDVenta mDVenta;
+    
+    @Inject
+    private AdmPedido admPedido;
 
     private List<Venta> ventas;
     private Venta venta;
@@ -109,6 +113,31 @@ public class AdmVenta implements Serializable {
     public List<Venta> getVentasPorEstado(char e) {
         char estado = e;
         return ventas = mDVenta.ventas_por_estado(e);
+    }
+    
+    public List<Venta> getVentasPorComidasP(char e) {
+        List<Venta> ventasFiltradas = new ArrayList<>();
+        List<Venta> todasLasVentas = mDVenta.ventas_por_estado(e);
+
+        // Filtrar ventas que tengan comidas pendientes
+        for (Venta venta : todasLasVentas) {
+            if (!admPedido.getComidasPendientes(venta).isEmpty()) {
+                ventasFiltradas.add(venta);
+            }
+        }
+        return ventasFiltradas;
+    }
+    public List<Venta> getVentasPorBebidasP(char e) {
+        List<Venta> ventasFiltradas = new ArrayList<>();
+        List<Venta> todasLasVentas = mDVenta.ventas_por_estado(e);
+
+        // Filtrar ventas que tengan comidas pendientes
+        for (Venta venta : todasLasVentas) {
+            if (!admPedido.getBebidasPendientes(venta).isEmpty()) {
+                ventasFiltradas.add(venta);
+            }
+        }
+        return ventasFiltradas;
     }
 
     public List<Venta> getVentasPorMesa(int m) {

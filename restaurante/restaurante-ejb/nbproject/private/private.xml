@@ -6,6 +6,9 @@
             <file>file:/C:/Users/hdzli/OneDrive/Documentos/proyecto_sakura/SistemaComandas/restaurante/restaurante-ejb/src/java/modelo/Venta.java</file>
             <file>file:/C:/Users/hdzli/OneDrive/Documentos/proyecto_sakura/SistemaComandas/restaurante/restaurante-ejb/src/java/manipuladatos/MDVenta.java</file>
             <file>file:/C:/Users/hdzli/OneDrive/Documentos/proyecto_sakura/SistemaComandas/restaurante/restaurante-ejb/src/java/accesodatos/VentaFacade.java</file>
+            <file>file:/C:/Users/hdzli/OneDrive/Documentos/proyecto_sakura/SistemaComandas/restaurante/restaurante-ejb/src/java/modelo/Pedido.java</file>
+            <file>file:/C:/Users/hdzli/OneDrive/Documentos/proyecto_sakura/SistemaComandas/restaurante/restaurante-ejb/src/java/manipuladatos/MDPedido.java</file>
+            <file>file:/C:/Users/hdzli/OneDrive/Documentos/proyecto_sakura/SistemaComandas/restaurante/restaurante-ejb/src/java/accesodatos/PedidoFacade.java</file>
         </group>
     </open-files>
 </project-private>

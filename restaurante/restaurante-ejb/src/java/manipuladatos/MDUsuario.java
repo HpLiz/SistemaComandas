@@ -23,10 +23,16 @@ public class MDUsuario {
     private UsuarioFacade usuarioF;
 
     public void insertaUsuario(Usuario u){
+        System.out.println("Insertando "+ u.getUsuario());
         usuarioF.create(u);
     }
     public void modificaUsuario(Usuario u){
+        if(u != null){
+        System.out.println("Modificando "+ u.getUsuario());
         usuarioF.edit(u);
+        }else{
+            System.out.println("Error: usuario nulo");
+        }
     }
     public List<Usuario> usuarios(){
         return usuarioF.findAll();

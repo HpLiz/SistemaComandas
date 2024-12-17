@@ -12,7 +12,7 @@
         <ui:composition template="./../resources/vista_cocina.xhtml">
 
             <ui:define name="content">
-                <p:carousel value="#{admVenta.getVentasPorEstado('p')}" var="venta" itemStyle="width:400px; height:450px;" id="Comidas">
+                <p:carousel value="#{admVenta.getVentasPorComidasP('p')}" var="venta" itemStyle="width:400px; height:450px;" id="Comidas">
                     <h3><h:outputText value="Mesa #{venta.nummesa}"/></h3>
                     <h:form>
                         <p:dataTable value="#{admPedido.getComidasPendientes(venta)}" var="platillo" id="tabla">
@@ -38,7 +38,8 @@
                                 <f:facet name="header">
                                     <h:outputText value="Accion"/>
                                 </f:facet>
-                                <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(platillo)}"/>
+                                <h:commandButton value="Entregar" actionListener="#{admPedido.actualizarEstadoP(platillo)}"
+                                                 update="Comidas"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>    

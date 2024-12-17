@@ -66,13 +66,15 @@ public class AdmUsuario implements Serializable {
         this.mensaje = mensaje;
     }
     
-    public void gestion(int ng, Usuario u){
-        setUsuario(u);
+    public void gestion(int ng){
         for(int n=0; n<3; n++)
             if(n==ng)
                 gestion[ng]="true";
             else
                 gestion[n]="false";
+        if(ng == 1){
+            creaUsuario();
+        }
     }
     public String getGestion(int ng){
         return gestion[ng];
@@ -127,20 +129,21 @@ public class AdmUsuario implements Serializable {
         return mDUsuario.usuarioU(usuario)!=null;
     }
     
-    public void registroPersona(){
+    public void registroPersona(Usuario u){
+        System.out.println("registrando adm"+ usuario.getUsuario());
         FacesContext contexto = FacesContext.getCurrentInstance();
         if(!registrado()){
             mDUsuario.insertaUsuario(usuario);
-            creaUsuario();
             FacesMessage msj = new FacesMessage("Usuario registrado correctamente");
             contexto.addMessage(null, msj);
         }else{
             FacesMessage msj = new FacesMessage("Usuario existente");
             contexto.addMessage(null, msj);
-            creaUsuario();
         }
     }
-    public void modificarPersona(){
+    public void modificarPersona(Usuario u){
+        
+        System.out.println("Modificando adm "+ usuario.getUsuario());
         FacesContext contexto = FacesContext.getCurrentInstance();
         mDUsuario.modificaUsuario(usuario);
         FacesMessage msj = new FacesMessage("Datos modificados correctamente");

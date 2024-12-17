@@ -54,5 +54,8 @@ public class MDPedido {
     public List<Object[]> cantidad_por_periodo(Date fi, Date ff){
         return pedidoFacade.cantidad_por_periodo(fi, ff);
     }
+    public List<Object[]> cantidad_por_periodo_y_tipo(Date fi, Date ff){
+        return pedidoFacade.cantidad_por_periodo_y_tipo(fi, ff);
+    }
 
 }

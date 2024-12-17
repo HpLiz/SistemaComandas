@@ -107,7 +107,6 @@ public class AdmPedido implements Serializable {
                     mensaje = new FacesMessage("Seleccione un producto...");
                     contexto.addMessage(null, mensaje);
                 }
-
                 if (pedido.getCantidad() < 1) {
                     valid = false;
                     mensaje = new FacesMessage("La cantidad debe ser mayor a 0...");
@@ -120,8 +119,6 @@ public class AdmPedido implements Serializable {
                     nuevos.add(pedido);
                     pedido = new Pedido();
                     pedido.setCantidad(1);
-                    //System.out.println("pedidos" + pedidos.toString());
-                    //System.out.println("nuevos" + nuevos.toString());
                 }
             } else {
                 mensaje = new FacesMessage("Seleccione una mesa...");

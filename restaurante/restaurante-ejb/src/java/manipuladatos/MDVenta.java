@@ -5,6 +5,7 @@
 package manipuladatos;
 
 import accesodatos.VentaFacade;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -33,6 +34,10 @@ public class MDVenta {
     public List<Venta> ventas_por_mesa(int m){
         System.out.println("buscando mesas...");
         return ventaFacade.ventas_por_mesa(m);
+    }
+    public List<Venta> ventas_por_periodo(Date fi, Date ff){
+        System.out.println("ventas en ... "+fi+" - "+ff);
+        return ventaFacade.ventas_por_periodo(fi,ff);
     }
 
     public void registrarVenta(Venta v){

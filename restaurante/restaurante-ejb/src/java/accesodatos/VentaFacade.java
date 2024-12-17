@@ -4,6 +4,7 @@
  */
 package accesodatos;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,5 +54,18 @@ public class VentaFacade extends AbstractFacade<Venta> {
             return null;
         }
         return mesas;
+    }
+    public List<Venta> ventas_por_periodo(Date fi, Date ff) {
+        List<Venta> ventas=null;
+        try {
+            Query consulta = em.createNamedQuery("Venta.findBetweenFecha");
+            consulta.setParameter("fechaInicio", fi);
+            consulta.setParameter("fechaFin", ff);
+            ventas = (List<Venta>) consulta.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql"+e);
+            return null;
+        }
+        return ventas;
     }
 }

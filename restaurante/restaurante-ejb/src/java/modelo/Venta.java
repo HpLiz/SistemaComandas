@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
     @NamedQuery(name = "Venta.findByIdventa", query = "SELECT v FROM Venta v WHERE v.idventa = :idventa"),
     @NamedQuery(name = "Venta.findByFecha", query = "SELECT v FROM Venta v WHERE v.fecha = :fecha"),
+    @NamedQuery(name = "Venta.findBetweenFecha", query = "SELECT v FROM Venta v WHERE v.fecha BETWEEN :fechaInicio AND :fechaFin"),
     @NamedQuery(name = "Venta.findByImporte", query = "SELECT v FROM Venta v WHERE v.importe = :importe"),
     @NamedQuery(name = "Venta.findByNummesa", query = "SELECT v FROM Venta v WHERE v.nummesa = :nummesa"),
     @NamedQuery(name = "Venta.findByEstado", query = "SELECT v FROM Venta v WHERE v.estado = :estado"),

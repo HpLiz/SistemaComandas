@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -32,6 +33,8 @@ public class AdmPedido implements Serializable {
 
     private List<Pedido> pedidos;
     private List<Pedido> nuevos;
+    private List<Pedido> comidas;
+    private List<Pedido> bebidas;
     private Pedido pedido;
     private Venta venta;
 
@@ -69,6 +72,11 @@ public class AdmPedido implements Serializable {
         nuevos = new ArrayList<Pedido>();
         pedidos = new ArrayList<Pedido>();
     }
+    @PostConstruct
+    public void init() {
+        comidas = getComidasPendientes(venta);
+        bebidas = getBebidasPendientes(venta);
+   }
 
     public List<Pedido> getPedidos() {
         return pedidos;//= mDPedido.pedidos();
@@ -244,23 +252,23 @@ public class AdmPedido implements Serializable {
     // Mostrar y actualizar pedidos pendientes
     // Para comidas y postres -> ambos van a la vista de cocina
     public List<Pedido> getComidasPendientes(Venta v) {
-        List<Pedido> comidas = mDPedido.getPedidos(v);
-        for (Pedido ped : comidas) {
-            if (ped.getIdproducto().getTipo().equals("Bebida")) {
-                comidas.remove(ped);
-            }
+        List<Pedido> cm = mDPedido.getPedidos(v);
+        List<Pedido> auxc = new ArrayList<Pedido>();
+        for(Pedido ped: cm){
+            if(!ped.getIdproducto().getTipo().equals("Bebida"))
+                auxc.add(ped);
         }
-        return comidas;
+        return auxc;
     }
 
     public List<Pedido> getBebidasPendientes(Venta v) {
-        List<Pedido> bebidas = mDPedido.getPedidos(v);
-        for (Pedido ped : bebidas) {
-            if (!ped.getIdproducto().getTipo().equals("Bebida")) {
-                bebidas.remove(ped);
-            }
+        List<Pedido> bb = mDPedido.getPedidos(v);
+        List<Pedido> auxb = new ArrayList<Pedido>();
+        for(Pedido ped: bb){
+            if(ped.getIdproducto().getTipo().equals("Bebida"))
+                auxb.add(ped);
         }
-        return bebidas;
+        return auxb;
     }
 
     public void actualizarEstadoP(Pedido p) {

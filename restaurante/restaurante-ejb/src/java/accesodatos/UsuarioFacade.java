@@ -7,6 +7,7 @@ package accesodatos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.Usuario;
 
 /**
@@ -22,6 +23,30 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public Usuario persona_usuario(String u){
+        Usuario persona = null;
+        try{
+            Query consultaup = em.createNamedQuery("Usuario.findByUsuario");
+            consultaup.setParameter("usuario", u);
+            persona = (Usuario) consultaup.getSingleResult();
+        }catch (Exception e){
+            return null;
+        }
+        return persona;
+    }
+    public Usuario persona_usu_pas(String usuario, String password){
+        Usuario persona = null;
+        try{
+            Query consultaup = em.createNamedQuery("Usuario.findByUsuarioPassword");
+            consultaup.setParameter("usuario", usuario);
+            consultaup.setParameter("password", password);
+            persona = (Usuario) consultaup.getSingleResult();
+        }catch (Exception e){
+            return null;
+        }
+        return persona;
     }
 
     public UsuarioFacade() {

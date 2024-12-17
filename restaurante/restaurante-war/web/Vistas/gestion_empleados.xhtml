@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/vista_admin.xhtml">
+
+            <ui:define name="left">
+                <h:panelGrid columns="1" width="20">
+                    <f:view>
+                        <h:form>
+                            <h:commandButton value="Listar Empleados"
+                                             actionListener="#{admUsuario.gestion(0,aPersona.persona)}"/>
+                            <h:commandButton value="Registrar empleado"
+                                             actionListener="#{admUsuario.gestion(1,aPersona.persona)}"/>
+                        </h:form>
+                    </f:view>
+                </h:panelGrid>  
+            </ui:define>
+
+            <ui:define name="content">
+                <p:growl id='mensaje'/>
+                <f:view>
+                    <h:form rendered="#{admUsuario.getGestion(0)}">
+                        <p:dataTable id="usuarios" value="#{admUsuario.getUsuarios()}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="IdUsuario"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.idusuario}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellido Materno"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.amaterno}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Puesto"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.puesto}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Usuario"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.usuario}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Accion"/>
+                                </f:facet>    
+                                <h:commandButton value="Editar" actionListener="#{admUsuario.gestion(2,item)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+                <f:view>
+                    <h:form rendered="#{admUsuario.getGestion(1)}">
+                        <h1><h:outputText value="Registro de un empleado"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Nombre" for="nombre"/>
+                            <h:inputText id="nombre" value="#{admUsuario.usuario.nombre}" title="Nombre" />
+                            <h:outputLabel value="APaterno" for="apaterno"/>
+                            <h:inputText id="apaterno" value="#{admUsuario.usuario.amaterno}" title="APaterno" />
+                            <h:outputLabel value="AMaterno" for="amaterno"/>
+                            <h:inputText id="amaterno" value="#{admUsuario.usuario.apaterno}" title="AMaterno" />
+                            <h:outputLabel value="Usuario" for="usuario"/>
+                            <h:inputText id="usuario" value="#{admUsuario.usuario.usuario}" title="Usuario" />
+                            <h:outputLabel value="Password" for="password"/>
+                            <h:inputText id="password" value="#{admUsuario.usuario.password}" title="Password" />
+                            <h:outputLabel value="Puesto" for="puesto"/>
+                        <h:selectOneRadio id="puesto" required="true" value="#{admUsuario.usuario.puesto}">
+                            <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
+                            <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
+                            <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
+                        </h:selectOneRadio>
+                            </h:panelGrid>
+                            <h:commandButton value="Registrar" actionListener="#{admUsuario.registroPersona()}"/>
+                    </h:form>
+                </f:view>
+                <f:view>
+                    <h:form rendered="#{admUsuario.getGestion(2)}">
+                        <h1><h:outputText value="Modificar empleado"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Empleado "/>
+                            <h:outputText value="#{admUsuario.usuario.idusuario}" title="Persona" />
+                            <h:outputLabel value="Nombre"/>
+                            <h:outputText value="#{admUsuario.usuario.nombre}" title="Nombre" />
+                            <h:outputLabel value="APaterno"/>
+                            <h:outputText value="#{admUsuario.usuario.apaterno}" title="APaterno" />
+                            <h:outputLabel value="AMaterno"/>
+                            <h:outputText value="#{admUsuario.usuario.amaterno}" title="AMaterno" />
+                            <h:outputLabel value="Usuario" for="usuario"/>
+                            <h:inputText id="usuario" value="#{admUsuario.usuario.usuario}" title="Usuario" />
+                            <h:outputLabel value="Nuevo Password" for="password"/>
+                            <h:inputText id="password" value="#{admUsuario.usuario.password}" title="Password" />
+                            <h:outputLabel value="Nuevo puesto" for="puesto"/>
+                            <h:selectOneRadio id="puesto" required="true" value="#{admUsuario.usuario.puesto}">
+                                <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
+                                <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
+                                <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
+                            </h:selectOneRadio>
+                    <h:commandButton value="Guardar cambios" actionListener="#{admUsuario.modificarPersona()}" onclick="#{admUsuario.gestion(0,item)}"/>
+                        </h:panelGrid>
+                </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

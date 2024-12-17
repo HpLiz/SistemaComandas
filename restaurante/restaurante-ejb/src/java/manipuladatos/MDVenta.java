@@ -40,4 +40,8 @@ public class MDVenta {
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    public void actualizarVenta(Venta venta) {
+        ventaFacade.edit(venta);
+    }
 }

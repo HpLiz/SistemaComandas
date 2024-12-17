@@ -4,6 +4,7 @@
  */
 package accesodatos;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,9 +29,9 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     public ProductoFacade() {
         super(Producto.class);
     }
-    
+
     public Producto produtoID(int id) {
-        Producto produto=null;
+        Producto produto = null;
         try {
             Query consultaup = em.createNamedQuery("Producto.findByIdproducto");
             consultaup.setParameter("idproducto", id);
@@ -41,6 +42,18 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         }
         return produto;
     }
-    
-    
+
+    public List<Producto> productosTipo(String t) {
+        List<Producto> productos = null;
+        try {
+            Query consultaup = em.createNamedQuery("Producto.findByTipo");
+            consultaup.setParameter("tipo", t);
+            productos = (List<Producto>) consultaup.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql" + e);
+            return null;
+        }
+        return productos;
+    }
+
 }

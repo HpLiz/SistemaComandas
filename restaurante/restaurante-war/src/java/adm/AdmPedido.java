@@ -65,6 +65,7 @@ public class AdmPedido implements Serializable {
      */
     public AdmPedido() {
         pedido = new Pedido();
+        pedido.setCantidad(1);
         nuevos = new ArrayList<Pedido>();
         pedidos = new ArrayList<Pedido>();
     }
@@ -97,12 +98,19 @@ public class AdmPedido implements Serializable {
                     mensaje = new FacesMessage("Seleccione un producto...");
                     contexto.addMessage(null, mensaje);
                 }
+
+                if (pedido.getCantidad() < 1) {
+                    valid = false;
+                    mensaje = new FacesMessage("La cantidad debe ser mayor a 0...");
+                    contexto.addMessage(null, mensaje);
+                }
                 if (valid) {
                     idExtra = 0;
                     idProducto = 0;
                     pedidos.add(pedido);
                     nuevos.add(pedido);
                     pedido = new Pedido();
+                    pedido.setCantidad(1);
                     //System.out.println("pedidos" + pedidos.toString());
                     //System.out.println("nuevos" + nuevos.toString());
                 }
@@ -115,17 +123,23 @@ public class AdmPedido implements Serializable {
         }
     }
 
-    public boolean actualizarVenta(Venta v) {
-        this.venta = v;
-        pedido.setIdventa(venta);
-        pedidos.clear();
-        pedidos = mDPedido.getPedidos(venta);
-        actualizar = false;
-        if (pedidos.size() > 0) {
-           return this. actualizar = true;
+    public void actualizarVenta(Venta v) {
+        try {
+            this.venta = v;
+            pedido.setIdventa(venta);
+            pedidos.clear();
+            pedidos = mDPedido.getPedidos(venta);
+            System.out.println("cantidad" + pedidos.size());
+            actualizar = false;
+            if (!pedidos.isEmpty()) {
+                this.actualizar = true;
+            }
+            System.out.println("Venta actualizada" + venta.getNummesa());
+
+        } catch (Exception e) {
+            System.out.println("error cambiando venta pedido" + e);
         }
-        System.out.println("Venta actualizada" + venta.getNummesa());
-        return this.actualizar = false;
+
     }
 
     public void setProducto(Producto p) {
@@ -142,7 +156,7 @@ public class AdmPedido implements Serializable {
         switch (e) {
             case 'p':
                 return "Pendiente";
-            case 'f':
+            case 't':
                 return "Finalizado";
             case 'c':
                 return "Cancelado";
@@ -206,7 +220,7 @@ public class AdmPedido implements Serializable {
         FacesContext contexto = FacesContext.getCurrentInstance();
         FacesMessage mensaje = new FacesMessage("actualizando...");
         contexto.addMessage(null, mensaje);
-        
+
         try {
             if (venta.getIdventa() == null || nuevos.get(0).getIdventa() == null) {
                 mensaje = new FacesMessage("Error al registrar...");
@@ -226,29 +240,82 @@ public class AdmPedido implements Serializable {
             contexto.addMessage(null, mensaje);
         }
     }
-    
+
     // Mostrar y actualizar pedidos pendientes
-    
     // Para comidas y postres -> ambos van a la vista de cocina
     public List<Pedido> getComidasPendientes(Venta v) {
         List<Pedido> comidas = mDPedido.getPedidos(v);
-        for(Pedido ped: comidas){
-            if(ped.getIdproducto().getTipo().equals("Bebida"))
+        for (Pedido ped : comidas) {
+            if (ped.getIdproducto().getTipo().equals("Bebida")) {
                 comidas.remove(ped);
+            }
         }
         return comidas;
     }
+
     public List<Pedido> getBebidasPendientes(Venta v) {
         List<Pedido> bebidas = mDPedido.getPedidos(v);
-        for(Pedido ped: bebidas){
-            if(!ped.getIdproducto().getTipo().equals("Bebida"))
+        for (Pedido ped : bebidas) {
+            if (!ped.getIdproducto().getTipo().equals("Bebida")) {
                 bebidas.remove(ped);
+            }
         }
         return bebidas;
     }
-    public void actualizarEstadoP(Pedido p){
+
+    public void actualizarEstadoP(Pedido p) {
         p.setEstado('t');
         mDPedido.actualizarPedido(p);
+    }
+
+    public void actualizarEstadoP(Pedido p, char est) {
+        p.setEstado(est);
+        mDPedido.actualizarPedido(p);
+    }
+
+    public Double getImporte() {
+        Double importe = 0.0;
+
+        for (Pedido p : pedidos) {
+            if (p.getEstado() == 't') {
+                importe += p.getIdproducto().getPrecio() * p.getCantidad();
+                if (p.getIdextra() != null) {
+                    importe += p.getIdextra().getPrecio() * p.getCantidad();
+                }
+            }
+        }
+        return importe;
+    }
+
+    public void cancelarPorFinalizacion(Venta v) {
+
+        boolean condicionCumplida = false;
+        int tiempoMaximoEspera = 200; // 5 segundos
+        int intervaloChequeo = 10; // Intervalo de chequeo en milisegundos
+        long tiempoInicio = System.currentTimeMillis();
+
+        while (!condicionCumplida && (System.currentTimeMillis() - tiempoInicio) < tiempoMaximoEspera) {
+            // Simular chequeo de condición
+            condicionCumplida = venta.getEstado() == 'c';
+
+            if (!condicionCumplida) {
+                //contexto.addMessage(null, mensaje);
+                try {
+                    Thread.sleep(intervaloChequeo);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (v.getEstado() == 'c' || v.getEstado() == 't') {
+            actualizarVenta(v);
+            for (Pedido p : pedidos) {
+                if (p.getEstado() == 'p') {
+                    actualizarEstadoP(p, 'c');
+                }
+            }
+        }
     }
 
 }

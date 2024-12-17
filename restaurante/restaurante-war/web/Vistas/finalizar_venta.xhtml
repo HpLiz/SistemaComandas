@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/ticket.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="ticket">
+                        <p:growl id="mensaje" showDetail="true" life="3000" />
+
+
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Idventa:"/>
+                            <h:outputText value="#{admVenta.venta.idventa}" title="Idventa"/>
+
+                            <h:outputText value="Nummesa:"/>
+                            <h:outputText value="#{admVenta.venta.nummesa}" title="Nummesa"/>
+
+                            <h:outputText value="Fecha:"/>
+                            <h:outputText value="#{admVenta.venta.fecha}" title="Fecha">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Importe:"/>
+                            <h:outputText value="#{admPedido.getImporte()}" title="Importe"/>
+
+                            <p:outputLabel value="Tipopago:" for="tipopago" />
+                            <p:selectOneMenu id="tipopago" value="#{admVenta.tipopago}" >
+                                <f:selectItem itemLabel="Seleccione una opcion" itemValue=""/>
+                                <f:selectItems value="#{admVenta.tipospagos}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}" >
+                                </f:selectItems>
+                                <p:ajax event="valueChange" update=":ticket" listener="#{admVenta.venta.setTipopago(admVenta.tipopago)}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" id="cobro" rendered="#{admVenta.efectivo}">
+                            <p:outputLabel value="Paga con:" for="pagoInput" />
+                            <p:inputText id="pagoInput" value="#{admVenta.pago}" title="cobro" disabled="#{!(admVenta.venta.estado=='t')}" />
+
+                            <h:outputLabel value="Cambio:" for="cambio"/>
+                            <h:outputText value="#{admVenta.cambio(admPedido.importe)}" title="Cambio" id="cambio"/>
+
+                        </p:panelGrid>
+
+                        <p:commandButton value="Finalizars" rendered="#{!(admVenta.venta.estado=='t')}" actionListener="#{admVenta.finalizar(admPedido.getImporte())}" update=":ticket" >
+                            <f:actionListener binding="#{admPedido.cancelarPorFinalizacion(admVenta.venta)}" />
+
+                        </p:commandButton>
+                        <p:commandButton value="Regresar" rendered="#{admVenta.venta.estado=='t'}" action="mesas">
+
+                        </p:commandButton>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

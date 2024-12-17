@@ -42,6 +42,7 @@ public class AdmMesa implements Serializable {
         return mesas.get(a-1);
     }
     public ArrayList<Mesa> getMesas(){
+        reset();
         return mesas;
     }
     
@@ -63,6 +64,12 @@ public class AdmMesa implements Serializable {
                 }
             }
         }
+    }
+    
+    public void reset(){
+        mesas.clear();
+        addMesas();
+        setEstados();
     }
     
     
@@ -102,6 +109,7 @@ public class AdmMesa implements Serializable {
         }
 
         public boolean isEstado() {
+            reset();
             return estado;
         }
 

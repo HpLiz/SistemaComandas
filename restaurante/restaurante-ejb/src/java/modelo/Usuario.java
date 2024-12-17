@@ -54,6 +54,16 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PUESTO")
     private String puesto;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "USUARIO")
+    private String usuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "PASSWORD")
+    private String password;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -141,6 +151,22 @@ public class Usuario implements Serializable {
 
     public void setPuesto(String puesto) {
         this.puesto = puesto;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
 }

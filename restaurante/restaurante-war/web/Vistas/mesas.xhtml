@@ -12,21 +12,33 @@
         <ui:composition template="./../resources/vista_mesero.xhtml">
 
             <ui:define name="content">
-                <p:dataGrid var="mesa" value="#{admMesa.mesas}" columns="4">
+                <p:dataGrid var="mesa" value="#{admMesa.mesas}" columns="4" id="mesas">
                     <p:column>
                         <p:panel header="#{mesa.numero}" styleClass="#{mesa.estado ? 'mesa-disponible' : 'mesa-ocupada'}">
                             <h:panelGrid columns="1">
                                 <h:form>
-                               <h:outputText value=" Capacidad: #{mesa.capacidad}" />
-                               <p:panelGrid columns="2">
-                                    <h:commandButton value="Tomar orden" action="tomar_orden?faces-redirect=true" rendered="#{mesa.estado}">
-                                        <f:param name="mesa" value="#{mesa.numero}" />
-                                    </h:commandButton> 
-                                    <h:commandButton value="Actualizar Orden" action="tomar_orden" rendered="#{!mesa.estado}" actionListener="#{admVenta.seleccionMesa(mesa.numero)}" onclick="#{admPedido.actualizarVenta(admVenta.venta)}"/>  
-                                    <h:commandButton value="Finalizar Orden"  /> 
-                                </p:panelGrid>
+                                    <p:growl sticky="300" id="mensaje" ></p:growl>
+
+                                    
+                                    
+                                    <p:confirmDialog message="¿Estas seguro que desea finalizar el pedido? Los pedidos pendientes pasaran a cancelados"
+                                                     header="Finalizar Pedido" severity="alert"
+                                                     widgetVar="cd">
+                                        <p:commandButton value="Confirmar" oncomplete="PF('cd').hide()" action="finalizar_venta"/>
+                                        <p:commandButton value="Cancelar" onclick="PF('cd').hide();" type="button" />
+                                    </p:confirmDialog>
+
+                                    <h:outputText value=" Capacidad: #{mesa.capacidad}" />
+                                    <p:panelGrid columns="2">
+                                        <h:commandButton value="#{mesa.estado ? 'Tomar orden' : 'Actualizar'}" action="tomar_orden" actionListener="#{admVenta.seleccionMesa(mesa.numero)}" >
+                                            <f:actionListener binding="#{admPedido.actualizarVenta(admVenta.venta)}"/>
+                                        </h:commandButton>
+                                        <p:commandButton value="Finalizar Orden"  rendered="#{!mesa.estado}" oncomplete="PF('cd').show()" actionListener="#{admVenta.seleccionMesa(mesa.numero)}"> 
+                                            <f:actionListener binding="#{admPedido.actualizarVenta(admVenta.venta)}" />
+                                        </p:commandButton>
+                                    </p:panelGrid>
                                 </h:form>
-                           </h:panelGrid>
+                            </h:panelGrid>
                         </p:panel>
                     </p:column>
                 </p:dataGrid>

@@ -47,9 +47,6 @@ public class Venta implements Serializable {
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "IMPORTE")
-    private Double importe;
     @Basic(optional = false)
     @NotNull
     @Column(name = "NUMMESA")
@@ -61,6 +58,9 @@ public class Venta implements Serializable {
     @NotNull
     @Column(name = "ESTADO")
     private Character estado;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "IMPORTE")
+    private Double importe;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -129,13 +129,6 @@ public class Venta implements Serializable {
         return "modelo.Venta[ idventa=" + idventa + " ]";
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 
     public Double getImporte() {
         return importe;
@@ -143,6 +136,14 @@ public class Venta implements Serializable {
 
     public void setImporte(Double importe) {
         this.importe = importe;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public int getNummesa() {

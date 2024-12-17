@@ -27,7 +27,7 @@ public class AdmProducto implements Serializable {
     private Producto producto;
     private String[] tipos = {"Comida", "Bebida", "Postre"};
 
-    private String tipo;
+    private String tipo="Comida";
 
     public Producto getProducto() {
         return producto;
@@ -45,6 +45,9 @@ public class AdmProducto implements Serializable {
 
     public List<Producto> getProductos() {
         return productos = mDProducto.productos();
+    }
+    public List<Producto> getProductosTipo() {
+        return productos = mDProducto.productosTipo(tipo);
     }
 
     public String[] getTipos() {

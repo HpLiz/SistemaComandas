@@ -26,6 +26,10 @@ public class MDProducto {
         return productoFacade.findAll();
     }
     
+    public List<Producto> productosTipo(String t){
+        return productoFacade.productosTipo(t);
+    }
+    
     public Producto productoID(int id){
         return productoFacade.produtoID(id);
     }

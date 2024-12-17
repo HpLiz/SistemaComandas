@@ -9,21 +9,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/tableLayout.css"/>
-        <title>Órdenes</title>
+        <title>Facelets Template</title>
     </h:head>
 
     <h:body>
-        <table cellspacing="10px" align="center" width="100%">
+        <table cellspacing="10px">
             <tr>
                 <td id="top">
-                    <ui:insert name="top">Vista Cocina
-                        <p:clock pattern="HH:mm:ss dd.MM.yyyy" />
-                    </ui:insert>
                 </td>
             </tr>
             <tr>
-                <td id="content" align="center" width="100%">
+                <td id="content">
                     <ui:insert name="content">Content</ui:insert>
+                </td>
+            </tr>
+            <tr>
+                <td id="bottom">
                 </td>
             </tr>
         </table>

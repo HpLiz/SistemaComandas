@@ -82,10 +82,10 @@
                             <h:outputLabel value="Password" for="password"/>
                             <h:inputText id="password" value="#{admUsuario.usuario.password}" title="Password" required="true"/>
                             <h:outputLabel value="Puesto" for="puesto"/>
-                            <h:selectOneRadio id="puesto" required="true" value="#{admUsuario.usuario.puesto}" required="true">
+                            <h:selectOneRadio id="puesto" required="true" value="#{admUsuario.usuario.puesto}">
                                 <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
                                 <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
-                                <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
+                                <f:selectItem itemValue="Mesero" itemLabel="Mesero" />
                             </h:selectOneRadio>
                         </h:panelGrid>
                         <h:commandButton value="Registrar" actionListener="#{admUsuario.registroPersona()}"/>

@@ -4,6 +4,7 @@
  */
 package accesodatos;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -54,5 +55,31 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
             return null;
         }
         return pedidos;
+    }
+    
+    public List<Pedido> pedidos_por_periodo(Date fi, Date ff){
+        List<Pedido> pedidos=null;
+        try {
+            Query consulta = em.createNamedQuery("Pedido.findByPeriodo");
+            consulta.setParameter("fechaInicio", fi);
+            consulta.setParameter("fechaFin", ff);
+            pedidos = (List<Pedido>) consulta.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return pedidos;
+    }
+    
+    public List<Integer> cantidad_por_periodo(Date fi, Date ff){
+        List<Integer> cantidades = null;
+        try{
+            Query consulta = em.createNamedQuery("Pedido.findCantidadPeriodo");
+            consulta.setParameter("fechaInicio", fi);
+            consulta.setParameter("fechaFin", ff);
+            cantidades = (List<Integer>) consulta.getResultList();
+        } catch (Exception e){
+            return null;
+        }
+        return cantidades;
     }
 }

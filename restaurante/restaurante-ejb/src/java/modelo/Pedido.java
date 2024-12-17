@@ -31,17 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findByIdpedido", query = "SELECT p FROM Pedido p WHERE p.idpedido = :idpedido"),
     @NamedQuery(name = "Pedido.findByVenta", query = "SELECT p FROM Pedido p WHERE p.idventa = :idventa"),
     @NamedQuery(name = "Pedido.findByEstado", query = "SELECT p FROM Pedido p WHERE p.estado = :estado"),
-    @NamedQuery(name = "Pedido.findByEstadoMesa", query = "SELECT p FROM Pedido p WHERE p.estado = :estado")})
+    @NamedQuery(name = "Pedido.findByEstadoMesa", query = "SELECT p FROM Pedido p WHERE p.estado = :estado"),
+    @NamedQuery(name = "Pedido.findByPeriodo", query = "SELECT p FROM Pedido p WHERE p.idventa.fecha BETWEEN :fechaInicio AND :fechaFin"),
+    @NamedQuery(name = "Pedido.findCantidadPeriodo", query = "SELECT SUM(p.cantidad)"+
+                                " FROM Pedido p WHERE p.idventa.fecha BETWEEN :fechaInicio AND :fechaFin"+
+                                " GROUP BY p.idproducto.idproducto")})
 public class Pedido implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ESTADO")
-    private Character estado;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CANTIDAD")
-    private int cantidad;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,6 +53,14 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "IDVENTA", referencedColumnName = "IDVENTA")
     @ManyToOne(optional = false)
     private Venta idventa;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ESTADO")
+    private Character estado;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CANTIDAD")
+    private int cantidad;
 
     public Pedido() {
     }

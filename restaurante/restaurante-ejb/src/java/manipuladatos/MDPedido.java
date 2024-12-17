@@ -5,6 +5,7 @@
 package manipuladatos;
 
 import accesodatos.PedidoFacade;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -42,6 +43,13 @@ public class MDPedido {
     public List<Pedido> pedidosPendientes() {
         char estado = 'p';
         return pedidoFacade.pedidosPendientes(estado);
+    }
+    
+    public List<Pedido> pedidos_por_periodo(Date fi, Date ff){
+        return pedidoFacade.pedidos_por_periodo(fi, ff);
+    }
+    public List<Integer> cantidad_por_periodo(Date fi, Date ff){
+        return pedidoFacade.cantidad_por_periodo(fi, ff);
     }
 
 }

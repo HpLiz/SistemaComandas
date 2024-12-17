@@ -113,7 +113,7 @@
                                 <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
                                 <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
                             </h:selectOneRadio>
-                    <h:commandButton value="Guardar cambios" actionListener="#{admUsuario.modificarPersona()}"/>
+                    <h:commandButton value="Guardar cambios" actionListener="#{admUsuario.modificarPersona()}" onclick="#{admUsuario.gestion(0,item)}"/>
                         </h:panelGrid>
                 </h:form>
                 </f:view>

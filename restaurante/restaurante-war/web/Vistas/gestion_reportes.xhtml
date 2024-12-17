@@ -1,18 +1,122 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../resources/vista_admin.xhtml">
 
             <ui:define name="left">
-                left
+                <h:panelGrid columns="1" width="20">
+                    <f:view>
+                        <h:form>
+                            <h:commandButton value="Reporte de ventas"
+                                             actionListener="#{admReportes.gestion(0)}"/>
+                            <h:commandButton value="Reporte de productos"
+                                             actionListener="#{admReportes.gestion(1)}"/>
+                            <h:commandButton value="Reporte de mesas"
+                                             actionListener="#{admReportes.gestion(2)}"/>
+                        </h:form>
+                    </f:view>
+                </h:panelGrid> 
             </ui:define>
-
+                
             <ui:define name="content">
-                VISTA REPORTES
+                <p:growl id='mensaje'/>
+                <f:view>
+                    <h:form rendered="#{admReportes.getGestion(0)}">
+                        <h1> <p:outputLabel value="VENTAS"/></h1>
+                        <h:panelGrid columns="3" width="400">
+                            <h:outputLabel value="Fecha Inicio" for="fechaInicio"/>
+                            <p:calendar id="fechaInicio" value="#{admReportes.fechaInicio}" title="FechaInicio" 
+                                        mode="popup" mindate="2000/01/01" maxdate="#{admReportes.fechaActual}" showOn="button" 
+                                        pattern="yyyy/MM/dd" timeZone="America/Mexico_City"
+                                        required="true" requiredMessage="La fecha es obligatoria."/>
+                            <h:outputLabel value="Fecha Fin" for="fechaFin"/>
+                            <p:calendar id="fechaFin" value="#{admReportes.fechaFin}" title="FechaFin" 
+                                        mode="popup" mindate="2000/01/01" maxdate="#{admReportes.fechaActual}" showOn="button" 
+                                        pattern="yyyy/MM/dd" timeZone="America/Mexico_City"
+                                        required="true" requiredMessage="La fecha es obligatoria."/>    
+                            <h:commandButton value="Consultar" actionListener="#{admReportes.cargarVentas}"
+                                             update="tablaVentas"/>
+                        </h:panelGrid>
+                        <p:dataTable id="tablaVentas" value="#{admReportes.ventas}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.fecha}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="IdVenta"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.idventa}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Importe"/>
+                                </f:facet>    
+                                <h:outputText value="$#{item.importe}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+                <f:view>
+                    <h:form rendered="#{admReportes.getGestion(1)}">
+                        <h1> <p:outputLabel value="VENTAS POR PRODUCTO" for="menu" /></h1>
+                        <h:panelGrid columns="3" width="100">
+                            <h:outputLabel value="Fecha Inicio" for="fechaInicio"/>
+                            <p:calendar id="fechaInicio" value="#{admReportes.fechaInicio}" title="FechaInicio" 
+                                        mode="popup" mindate="2000/01/01" maxdate="#{admReportes.fechaActual}" showOn="button" 
+                                        pattern="yyyy/MM/dd" timeZone="America/Mexico_City"
+                                        required="true" requiredMessage="La fecha es obligatoria."/>
+                            <h:outputLabel value="Fecha Fin" for="fechaFin"/>
+                            <p:calendar id="fechaFin" value="#{admReportes.fechaFin}" title="FechaFin" 
+                                        mode="popup" mindate="2000/01/01" maxdate="#{admReportes.fechaActual}" showOn="button" 
+                                        pattern="yyyy/MM/dd" timeZone="America/Mexico_City"
+                                        required="true" requiredMessage="La fecha es obligatoria."/>    
+                            <h:commandButton value="Consultar" actionListener="#{admReportes.cargarProductos}"
+                                             update="tablaProductos"/>
+                        </h:panelGrid>
+                        <p:dataTable id="tablaProductos" value="#{admReportes.productos}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.idventa.fecha}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="IdProducto"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.idproducto.idproducto}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.idproducto.nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Cantidad vendida"/>
+                                </f:facet>    
+                                <h:outputText value="#{item.cantidad}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Importe"/>
+                                </f:facet>    
+                                <h:outputText value="#{admReportes.calcularImporte(item.cantidad, item.idproducto.precio)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
             </ui:define>
 
         </ui:composition>

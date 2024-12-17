@@ -100,4 +100,19 @@ public class PedidoFacade extends AbstractFacade<Pedido> {
         }
         return cantidades;
     }
+    
+    public List<Object[]> cantidad_por_periodo_y_tipo(Date fi, Date ff) {
+        List<Object[]> cantidades = null;
+        try {
+            Query consulta = em.createNamedQuery("Pedido.findCantidadPeriodoTipo");
+            consulta.setParameter("fechaInicio", fi);
+            consulta.setParameter("fechaFin", ff);
+            cantidades = (List) consulta.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error sql" + e);
+            return null;
+        }
+        System.out.println("cantidad sql"+cantidades.size());
+        return cantidades;
+    }
 }

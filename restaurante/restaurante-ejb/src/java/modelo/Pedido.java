@@ -36,7 +36,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pedido.findByPeriodo", query = "SELECT p FROM Pedido p WHERE p.idventa.fecha BETWEEN :fechaInicio AND :fechaFin"),
     @NamedQuery(name = "Pedido.findCantidadPeriodo", query = "SELECT p.idventa.fecha as fecha, p.idproducto.idproducto  ,SUM(p.cantidad) as total"+
                                 " FROM Pedido p WHERE p.idventa.fecha BETWEEN :fechaInicio AND :fechaFin"+
-                                " GROUP BY p.idproducto.idproducto , p.idventa.fecha")})
+                                " GROUP BY p.idproducto.idproducto , p.idventa.fecha"),
+    @NamedQuery(name = "Pedido.findCantidadPeriodoTipo", query = "SELECT p.idventa.fecha as fecha, p.idproducto.tipo  ,SUM(p.cantidad) as total"+
+                                " FROM Pedido p WHERE p.idventa.fecha BETWEEN :fechaInicio AND :fechaFin"+
+                                " GROUP BY p.idproducto.tipo , p.idventa.fecha")
+
+})
 public class Pedido implements Serializable {
 
     @Basic(optional = false)

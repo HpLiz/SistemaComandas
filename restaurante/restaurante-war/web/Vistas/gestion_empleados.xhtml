@@ -14,6 +14,7 @@
                 <h:panelGrid columns="1" width="20">
                     <f:view>
                         <h:form>
+                            <p:growl id='mensaje'/>
                             <h:commandButton value="Listar Empleados"
                                              actionListener="#{admUsuario.gestion(0,aPersona.persona)}"/>
                             <h:commandButton value="Registrar empleado"
@@ -24,7 +25,6 @@
             </ui:define>
 
             <ui:define name="content">
-                <p:growl id='mensaje'/>
                 <f:view>
                     <h:form rendered="#{admUsuario.getGestion(0)}">
                         <p:dataTable id="usuarios" value="#{admUsuario.getUsuarios()}" var="item">
@@ -72,23 +72,23 @@
                         <h1><h:outputText value="Registro de un empleado"/></h1>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Nombre" for="nombre"/>
-                            <h:inputText id="nombre" value="#{admUsuario.usuario.nombre}" title="Nombre" />
+                            <h:inputText id="nombre" value="#{admUsuario.usuario.nombre}" title="Nombre" required="true"/>
                             <h:outputLabel value="APaterno" for="apaterno"/>
-                            <h:inputText id="apaterno" value="#{admUsuario.usuario.amaterno}" title="APaterno" />
+                            <h:inputText id="apaterno" value="#{admUsuario.usuario.amaterno}" title="APaterno" required="true"/>
                             <h:outputLabel value="AMaterno" for="amaterno"/>
-                            <h:inputText id="amaterno" value="#{admUsuario.usuario.apaterno}" title="AMaterno" />
+                            <h:inputText id="amaterno" value="#{admUsuario.usuario.apaterno}" title="AMaterno" required="true"/>
                             <h:outputLabel value="Usuario" for="usuario"/>
-                            <h:inputText id="usuario" value="#{admUsuario.usuario.usuario}" title="Usuario" />
+                            <h:inputText id="usuario" value="#{admUsuario.usuario.usuario}" title="Usuario" required="true"/>
                             <h:outputLabel value="Password" for="password"/>
-                            <h:inputText id="password" value="#{admUsuario.usuario.password}" title="Password" />
+                            <h:inputText id="password" value="#{admUsuario.usuario.password}" title="Password" required="true"/>
                             <h:outputLabel value="Puesto" for="puesto"/>
-                        <h:selectOneRadio id="puesto" required="true" value="#{admUsuario.usuario.puesto}">
-                            <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
-                            <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
-                            <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
-                        </h:selectOneRadio>
-                            </h:panelGrid>
-                            <h:commandButton value="Registrar" actionListener="#{admUsuario.registroPersona()}"/>
+                            <h:selectOneRadio id="puesto" required="true" value="#{admUsuario.usuario.puesto}" required="true">
+                                <f:selectItem itemValue="Bebidas" itemLabel="Bebidas"/>
+                                <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
+                                <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
+                            </h:selectOneRadio>
+                        </h:panelGrid>
+                        <h:commandButton value="Registrar" actionListener="#{admUsuario.registroPersona()}"/>
                     </h:form>
                 </f:view>
                 <f:view>
@@ -113,9 +113,9 @@
                                 <f:selectItem itemValue="Cocina" itemLabel="Cocina"/>
                                 <f:selectItem itemValue="Mesero" itemLabel="Mesero"/>
                             </h:selectOneRadio>
-                    <h:commandButton value="Guardar cambios" actionListener="#{admUsuario.modificarPersona()}" onclick="#{admUsuario.gestion(0,item)}"/>
+                            <h:commandButton value="Guardar cambios" actionListener="#{admUsuario.modificarPersona()}" onclick="#{admUsuario.gestion(0,item)}"/>
                         </h:panelGrid>
-                </h:form>
+                    </h:form>
                 </f:view>
             </ui:define>
 

@@ -11,11 +11,21 @@
         <ui:composition template="./../resources/vista_admin.xhtml">
 
             <ui:define name="left">
-                left
+                <f:view>
+                    <h:form>
+                        <h:commandButton value="Actualizar"/> 
+                    </h:form>
+                </f:view>
+
             </ui:define>
 
             <ui:define name="content">
-                Vista dashboard
+                <f:view>
+                    <h:form>
+                        <p:chart type="line" model="#{lineChart.modeloTipos()}" />
+                    </h:form>
+                </f:view>
+
             </ui:define>
 
         </ui:composition>

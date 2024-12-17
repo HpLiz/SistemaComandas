@@ -137,7 +137,7 @@ public class AdmUsuario implements Serializable {
         }else{
             FacesMessage msj = new FacesMessage("Usuario existente");
             contexto.addMessage(null, msj);
-            creaUsuario();
+            mDUsuario.insertaUsuario(usuario);
         }
     }
     public void modificarPersona(){
